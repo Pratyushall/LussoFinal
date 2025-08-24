@@ -48,12 +48,12 @@ export default function Footer() {
           {/* Brand image (replaces text) */}
           <div className="flex flex-col items-center gap-4">
             <Image
-              src="/images/lussolux.jpg" // <- your LUSSO + tagline image
+              src="/images/footerlo1.png" // <- your LUSSO + tagline image
               alt="LUSSO — Luxury Simplified"
               width={280}
               height={56}
               sizes="(max-width: 640px) 200px, 280px"
-              className="h-12 md:h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,0,0,0.35)] max-w-full"
+              className="h-22 md:h-14 w-auto object-contain drop-shadow-[0_0_8px_rgba(0,0,0,0.35)] max-w-full"
               priority
             />
           </div>

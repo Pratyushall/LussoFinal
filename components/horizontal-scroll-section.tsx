@@ -116,25 +116,25 @@ export default function ProjectSections() {
       <FullscreenHero
         href="/kitchens"
         label="Modular Kitchens"
-        index="01"
+        index=""
         src="/images/kitchen11.png"
       />
       <FullscreenHero
         href="/wardrobes"
         label="Wardrobes"
-        index="02"
+        index=""
         src="/images/wrd11.png"
       />
       <FullscreenHero
         href="/shutters"
         label="Shutters"
-        index="03"
+        index=""
         src="/images/shut1.png"
       />
       <FullscreenHero
         href="/partitions"
         label="Partitions"
-        index="04"
+        index=""
         src="/images/part11.png"
       />
     </div>

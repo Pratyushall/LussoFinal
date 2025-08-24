@@ -97,7 +97,17 @@ function ProductsHero() {
           className="text-6xl md:text-8xl font-thin text-white tracking-tight"
         >
           Our{" "}
-          <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-600 to-amber-800 bg-clip-text">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{
+              backgroundImage: `linear-gradient(
+      to right,
+      rgba(213, 175, 46, 0.9),   /* lighter gold */
+      rgba(213, 175, 46, 1),     /* base gold */
+      rgba(150, 120, 30, 1)      /* deeper gold */
+    )`,
+            }}
+          >
             Products
           </span>
         </motion.h1>

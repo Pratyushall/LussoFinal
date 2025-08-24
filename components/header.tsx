@@ -111,8 +111,8 @@ export default function Header({ isScrolled }: HeaderProps) {
                 <Image
                   src="/images/favicon.png"
                   alt="Lusso Logo"
-                  width={60}
-                  height={60}
+                  width={100}
+                  height={100}
                   className="mx-auto mb-2 rounded-full"
                   priority
                 />

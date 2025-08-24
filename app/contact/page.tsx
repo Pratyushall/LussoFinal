@@ -110,7 +110,17 @@ function ContactHero() {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
             Contact{" "}
-            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text">
+            <span
+              className="text-transparent bg-clip-text"
+              style={{
+                backgroundImage: `linear-gradient(
+      to right,
+      rgba(213, 175, 46, 0.9),   /* lighter gold */
+      rgba(213, 175, 46, 1),     /* base gold */
+      rgba(150, 120, 30, 1)      /* deeper gold */
+    )`,
+              }}
+            >
               Us
             </span>
           </motion.h1>
