@@ -136,17 +136,14 @@ export default function Header({ isScrolled }: HeaderProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="/" className="flex items-center gap-2">
-                  <span
-                    className={`${playfair.className} text-2xl text-white font-semibold tracking-widest`}
-                  >
-                    LUSSO
-                  </span>
-                  <span
-                    className={`${playfair.className} text-xs text-gray-300 font-light`}
-                  >
-                    | Luxury simplified
-                  </span>
+                <Link href="/" className="flex items-center gap-0.5">
+                  <Image
+                    src="/images/lussoleft1.png"
+                    alt="Luxury simplified"
+                    width={150} // adjust size as needed
+                    height={150}
+                    className="object-contain"
+                  />
                 </Link>
               </motion.button>
             </Link>
