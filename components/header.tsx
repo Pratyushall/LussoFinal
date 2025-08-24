@@ -138,7 +138,7 @@ export default function Header({ isScrolled }: HeaderProps) {
               >
                 <Link href="/" className="flex items-center gap-0.5">
                   <Image
-                    src="/images/lussoleft1.png"
+                    src="/images/Lussoleft1.png"
                     alt="Luxury simplified"
                     width={150} // adjust size as needed
                     height={150}
