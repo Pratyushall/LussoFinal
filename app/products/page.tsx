@@ -5,9 +5,6 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/footer";
 
-/** -----------------------------------------------------------
- *  PRODUCTS PAGE — Immersive full-screen sections
- * ----------------------------------------------------------- */
 export default function ProductsPage() {
   return (
     <div style={{ backgroundColor: "#0a1526" }} className="min-h-screen">
@@ -19,9 +16,6 @@ export default function ProductsPage() {
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Reusable top-right menu (unchanged)
-   ──────────────────────────────────────────────────────────── */
 function TopRightMenu() {
   const [open, setOpen] = useState(false);
   return (
@@ -65,9 +59,6 @@ function TopRightMenu() {
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Products Hero (header text)
-   ──────────────────────────────────────────────────────────── */
 function ProductsHero() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
@@ -77,7 +68,6 @@ function ProductsHero() {
       ref={ref}
       className="min-h-[100vh] flex items-center justify-center relative overflow-hidden"
     >
-      {/* Ambient glows */}
       <motion.div
         className="absolute -top-20 -left-28 w-[28rem] h-[28rem] bg-gradient-to-r from-amber-400/10 to-pink-500/10 rounded-full blur-3xl"
         animate={{ scale: [1, 1.15, 1], rotate: [0, 180, 360] }}
@@ -126,9 +116,6 @@ function ProductsHero() {
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Full-screen stack — 4 sections (unchanged from your code)
-   ──────────────────────────────────────────────────────────── */
 function ProductsStack() {
   const cards = [
     {
@@ -248,7 +235,6 @@ function FullScreenProductSection({
             </motion.div>
           </div>
 
-          {/* A very subtle inner sheen (no “frame” look) */}
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.06)_30%,transparent_60%)]" />
         </motion.div>
       </div>
@@ -256,12 +242,6 @@ function FullScreenProductSection({
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Fancy gradient arrow button
-   - Shimmering animated gradient background
-   - Soft glow on hover
-   - Works as <button> or Link
-   ──────────────────────────────────────────────────────────── */
 function GradientArrowBtn({
   label,
   href,
@@ -282,15 +262,12 @@ function GradientArrowBtn({
         big
           ? "px-10 py-4 text-base md:text-lg"
           : "px-6 py-3 text-sm md:text-base",
-        // animated gradient bg
+
         "bg-[length:200%_200%] bg-gradient-to-r from-amber-300 via-amber-500 to-rose-500",
         "animate-[gradientShift_6s_linear_infinite]",
         "shadow-[0_12px_36px_rgba(251,191,36,0.25)]",
       ].join(" ")}
       style={{
-        // keyframes via inline style fallback for Tailwind-less @keyframes
-        // (Tailwind not defining gradientShift by default)
-        // You can move this to global CSS if you prefer.
         animationName: "gradientShift",
       }}
     >
@@ -301,7 +278,7 @@ function GradientArrowBtn({
       >
         →
       </span>
-      {/* subtle inner highlight */}
+
       <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/25"></span>
       <style jsx>{`
         @keyframes gradientShift {

@@ -16,14 +16,16 @@ import Footer from "@/components/footer";
 type Tile = { src: string; alt: string };
 
 type WardrobeType = {
-  key: "walkin" | "sliding" | "openable";
+  key: "bifold" | "corner" | "sliding" | "swing" | "walkin";
   label: string;
 };
 
 const WARDROBE_TYPES: WardrobeType[] = [
+  { key: "bifold", label: "Bi-fold" },
+  { key: "corner", label: "corner" },
+  { key: "sliding", label: "sliding door" },
+  { key: "swing", label: "swing door" },
   { key: "walkin", label: "Walk-in" },
-  { key: "sliding", label: "Sliding" },
-  { key: "openable", label: "Openable" },
 ];
 
 /* ---------------------------------------------
@@ -94,14 +96,14 @@ function Hero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl">
           <h1 className="text-6xl md:text-8xl font-thin text-white tracking-tight">
-            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-600 to-amber-800 bg-clip-text">
+            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-400 to-amber-400 bg-clip-text">
               Wardrobes
             </span>
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent my-6" />
           <p className="text-lg md:text-xl text-white/75 leading-relaxed">
-            Walk-in, sliding, and openable systems — boutique organization
-            tailored to you.
+            Bi-fold, corner, sliding door, swing door, and walk-in—boutique
+            organization tailored to you.
           </p>
         </div>
       </div>
@@ -134,9 +136,7 @@ function TypesNav() {
               <span
                 aria-hidden
                 className="ml-2 inline-block transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
+              ></span>
             </button>
           ))}
         </div>
@@ -149,36 +149,95 @@ function TypesNav() {
  * Sections per type — each = FULL-SCREEN framed slideshow
  * -------------------------------------------*/
 function TypesSections() {
-  const WALKIN: Tile[] = [
-    { src: "/images/wrdpp.png", alt: "Open shelving showcase" },
-    { src: "/images/walkina.jpg", alt: "Walk-in wardrobe with central island" },
-    { src: "/images/walkinb.jpg", alt: "Warm veneer walk-in" },
-    { src: "/images/walkinc.jpg", alt: "Walk-in with glass partitions" },
-    { src: "/images/walkine.jpg", alt: "Walk-in with mirrored doors" },
-    { src: "/images/walkinf.jpg", alt: "Boutique-style lighting" },
+  // Reused your existing file names where possible; add bifold/corner images with the names below.
+  const BIFOLD: Tile[] = [
+    {
+      src: "/images/bifw1.png",
+      alt: "Bi-fold wardrobe, compact opening",
+    },
+    {
+      src: "/images/bifw2.png",
+      alt: "Bi-fold panels with slim profiles",
+    },
+    {
+      src: "/images/bifw3.png",
+      alt: "Textured bi-fold fronts, modern look",
+    },
+    {
+      src: "/images/bifw4.png",
+      alt: "Bi-fold with mirrored inserts",
+    },
+    { src: "/images/bifw5.png", alt: "Warm veneer bi-fold doors" },
+    {
+      src: "/images/bifw6.png",
+      alt: "Matte bi-fold, minimal handles",
+    },
   ];
+
+  const CORNER: Tile[] = [
+    {
+      src: "/images/corw1.png",
+      alt: "Corner wardrobe with wrap shelving",
+    },
+    {
+      src: "/images/corw2.png",
+      alt: "Corner unit with hinged access",
+    },
+    {
+      src: "/images/corw3.png",
+      alt: "L-shaped corner with glass doors",
+    },
+    {
+      src: "/images/corw4.png",
+      alt: "Corner wardrobe, integrated drawers",
+    },
+    {
+      src: "/images/corw5.png",
+      alt: "Compact corner, mirrored facade",
+    },
+    {
+      src: "/images/corw6.png",
+      alt: "Corner configuration, warm wood",
+    },
+  ];
+
   const SLIDING: Tile[] = [
-    { src: "/images/wrdpp1.png", alt: "Handle-less graphite sliding" },
-    { src: "/images/slidinga.jpg", alt: "Sliding doors with bronze mirror" },
-    { src: "/images/slidingb.jpg", alt: "Floor-to-ceiling sliding panels" },
-    { src: "/images/slidingc.jpg", alt: "Sliding smoked glass fronts" },
-    { src: "/images/slidinge.jpg", alt: "Soft-close aluminum frames" },
-    { src: "/images/slidingf.jpg", alt: "Textured panel finishes" },
+    { src: "/images/slid1.png", alt: "Handle-less graphite sliding" },
+    { src: "/images/slid2.png", alt: "Sliding doors with bronze mirror" },
+    { src: "/images/slid3.png", alt: "Floor-to-ceiling sliding panels" },
+    { src: "/images/slid4.png", alt: "Sliding smoked glass fronts" },
+    { src: "/images/slid5.png", alt: "Soft-close aluminum frames" },
+    { src: "/images/slid6.png", alt: "Textured panel finishes" },
   ];
-  const OPENABLE: Tile[] = [
-    { src: "/images/wrdpp2.png", alt: "Compact master hinged wardrobe" },
-    { src: "/images/open1.jpg", alt: "Openable wardrobe, matte finish" },
-    { src: "/images/open2.jpg", alt: "Minimal white hinged doors" },
-    { src: "/images/open3.jpg", alt: "Soft beige hinged wardrobe" },
-    { src: "/images/open5.jpg", alt: "Paneled classic doors" },
-    { src: "/images/open6.jpg", alt: "Hinged wardrobe with glass inlays" },
+
+  const SWING: Tile[] = [
+    {
+      src: "/images/swid1.png",
+      alt: "Compact master hinged (swing) wardrobe",
+    },
+    { src: "/images/swid2.png", alt: "Swing door wardrobe, matte finish" },
+    { src: "/images/swid3.png", alt: "Minimal white swing doors" },
+    { src: "/images/swid4.png", alt: "Soft beige swing wardrobe" },
+    { src: "/images/swid5.png", alt: "Paneled classic swing doors" },
+    { src: "/images/swid6.png", alt: "Swing doors with glass inlays" },
+  ];
+
+  const WALKIN: Tile[] = [
+    { src: "/images/walkw1.png", alt: "Open shelving showcase" },
+    { src: "/images/walkw2.png", alt: "Walk-in wardrobe with central island" },
+    { src: "/images/walkw3.png", alt: "Warm veneer walk-in" },
+    { src: "/images/walkw4.png", alt: "Walk-in with glass partitions" },
+    { src: "/images/walkw5.png", alt: "Walk-in with mirrored doors" },
+    { src: "/images/walkw6.png", alt: "Boutique-style lighting" },
   ];
 
   return (
     <>
+      <TypeBlock id="type-bifold" title="Bi-fold" images={BIFOLD} />
+      <TypeBlock id="type-corner" title="corner" images={CORNER} />
+      <TypeBlock id="type-sliding" title="sliding door" images={SLIDING} />
+      <TypeBlock id="type-swing" title="swing door" images={SWING} />
       <TypeBlock id="type-walkin" title="Walk-in" images={WALKIN} />
-      <TypeBlock id="type-sliding" title="Sliding" images={SLIDING} />
-      <TypeBlock id="type-openable" title="Openable" images={OPENABLE} />
     </>
   );
 }
@@ -218,7 +277,7 @@ function FullscreenWoodFrame({
     <div className="relative h-[100svh] w-[100vw] overflow-hidden">
       {/* Background: wooden frame image */}
       <Image
-        src="/images/frame5.png" // <-- place frame5.png in /public/images/
+        src="/images/frame5.png"
         alt=""
         fill
         priority={false}
@@ -248,9 +307,6 @@ function FullscreenWoodFrame({
 
 /* ---------------------------------------------
  * SlideshowCore (same interaction as Kitchens)
- * - Autoplay (pauses while hovering center zone)
- * - Arrows, dots, keyboard, swipe
- * - Center hover overlay shows the type label
  * -------------------------------------------*/
 function SlideshowCore({
   images,
@@ -336,7 +392,7 @@ function SlideshowCore({
         })}
       </div>
 
-      {/* Center hover sensor (middle area only) */}
+      {/* Center hover sensor */}
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/5 h-3/5 max-w-[640px] max-h-[60vh] z-20"
         onMouseEnter={() => setHoveringCenter(true)}

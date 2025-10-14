@@ -20,7 +20,6 @@ export default function PortfolioPage() {
   );
 }
 
-// Hero Section
 function PortfolioHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
@@ -30,7 +29,6 @@ function PortfolioHero() {
       ref={sectionRef}
       className="min-h-screen relative overflow-hidden flex items-center justify-center pt-20"
     >
-      {/* Animated Background */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl"
@@ -108,7 +106,6 @@ function PortfolioHero() {
   );
 }
 
-// Premium Video Section
 function PremiumVideoSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
@@ -150,14 +147,12 @@ function PremiumVideoSection() {
 
   return (
     <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      {/* Background Effects */}
       <motion.div className="absolute inset-0" style={{ y }}>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-pink-500/5 to-cyan-500/5 rounded-full blur-3xl" />
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 50 }}
@@ -170,7 +165,6 @@ function PremiumVideoSection() {
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto" />
         </motion.div>
 
-        {/* Main Video Display */}
         <motion.div
           className="relative mb-16"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -190,10 +184,8 @@ function PremiumVideoSection() {
               <source src={videos[activeVideo].video} type="video/mp4" />
             </video>
 
-            {/* Video Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-            {/* Video Info */}
             <motion.div
               className="absolute bottom-8 left-8 right-8"
               key={activeVideo}
@@ -214,7 +206,6 @@ function PremiumVideoSection() {
               </div>
             </motion.div>
 
-            {/* Play Button Overlay */}
             <motion.div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               whileHover={{ scale: 1.1 }}
@@ -227,7 +218,6 @@ function PremiumVideoSection() {
           </div>
         </motion.div>
 
-        {/* Video Thumbnails */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {videos.map((video, index) => (
             <motion.div
@@ -249,7 +239,6 @@ function PremiumVideoSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-                {/* Active Indicator */}
                 {activeVideo === index && (
                   <motion.div
                     className="absolute top-4 right-4 w-3 h-3 bg-blue-400 rounded-full"
@@ -276,7 +265,6 @@ function PremiumVideoSection() {
   );
 }
 
-// Image Gallery Section
 function ImageGallerySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
@@ -329,7 +317,6 @@ function ImageGallerySection() {
   return (
     <section ref={sectionRef} className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 50 }}
@@ -343,7 +330,6 @@ function ImageGallerySection() {
           </p>
         </motion.div>
 
-        {/* Masonry Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
           {galleryImages.map((image, index) => (
             <motion.div
@@ -362,10 +348,8 @@ function ImageGallerySection() {
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* Content */}
                 <motion.div
                   className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   initial={{ y: 20 }}
@@ -380,7 +364,6 @@ function ImageGallerySection() {
                   <p className="text-sm text-white/80">{image.description}</p>
                 </motion.div>
 
-                {/* Zoom Icon */}
                 <motion.div
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   whileHover={{ scale: 1.1 }}
@@ -395,7 +378,6 @@ function ImageGallerySection() {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedImage !== null && (
           <motion.div
@@ -419,7 +401,6 @@ function ImageGallerySection() {
                 className="w-full h-full object-contain"
               />
 
-              {/* Close Button */}
               <motion.button
                 onClick={() => setSelectedImage(null)}
                 className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-300"
@@ -429,7 +410,6 @@ function ImageGallerySection() {
                 ✕
               </motion.button>
 
-              {/* Image Info */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                 <p className="text-purple-300 text-sm mb-2">
                   {galleryImages[selectedImage].category}
@@ -449,7 +429,6 @@ function ImageGallerySection() {
   );
 }
 
-// Testimonials Section
 function TestimonialsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
@@ -503,7 +482,6 @@ function TestimonialsSection() {
 
   return (
     <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      {/* Background Effects */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-pink-500/5 to-purple-500/5 rounded-full blur-3xl"
@@ -520,7 +498,6 @@ function TestimonialsSection() {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 50 }}
@@ -536,7 +513,6 @@ function TestimonialsSection() {
           </p>
         </motion.div>
 
-        {/* Main Testimonial Display */}
         <motion.div
           className="max-w-4xl mx-auto mb-16"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -604,7 +580,6 @@ function TestimonialsSection() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Testimonial Navigation */}
         <div className="flex justify-center space-x-4">
           {testimonials.map((_, index) => (
             <motion.button
@@ -621,7 +596,6 @@ function TestimonialsSection() {
           ))}
         </div>
 
-        {/* Client Logos */}
         <motion.div
           className="mt-20 text-center"
           initial={{ opacity: 0, y: 30 }}

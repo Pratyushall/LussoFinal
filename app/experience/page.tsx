@@ -19,10 +19,9 @@ export default function ExperiencePage() {
       className="min-h-screen relative"
       style={{ backgroundColor: "#0a1526" }}
     >
-      <TopRightMenu /> {/* ← Menu */}
-      {/* HERO */}
+      <TopRightMenu />
+
       <section className="relative overflow-hidden">
-        {/* soft ambient glows */}
         <motion.div
           className="absolute -top-16 -left-16 w-[28rem] h-[28rem] bg-white/5 rounded-full blur-3xl"
           initial={{ opacity: 0, y: 30 }}
@@ -79,10 +78,9 @@ export default function ExperiencePage() {
           </motion.div>
         </div>
       </section>
-      {/* ADDRESS & HOURS */}
+
       <section className="relative z-10 container mx-auto px-6 pb-12">
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Address card with amber frame */}
           <motion.div
             className="relative rounded-[26px] p-[2px] bg-gradient-to-r from-amber-300/40 via-amber-500/40 to-amber-700/40"
             initial={{ opacity: 0, y: 16 }}
@@ -146,7 +144,6 @@ export default function ExperiencePage() {
             </div>
           </motion.div>
 
-          {/* Why Visit */}
           <motion.div
             className="relative rounded-[26px] p-[2px] bg-gradient-to-r from-amber-300/20 via-amber-500/20 to-amber-700/20"
             initial={{ opacity: 0, y: 16 }}
@@ -180,9 +177,8 @@ export default function ExperiencePage() {
           </motion.div>
         </div>
       </section>
-      {/* BIG CTA SECTION (takes a whole section) */}
+
       <section id="visit" className="relative py-24 overflow-hidden">
-        {/* faint glow band */}
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-amber-400/10 to-transparent" />
         <div className="relative container mx-auto px-6">
           <motion.div
@@ -231,14 +227,11 @@ export default function ExperiencePage() {
           </motion.div>
         </div>
       </section>
-      <Footer /> {/* ← Footer */}
+      <Footer />
     </main>
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Top-right menu (reuse across pages or move to app/layout.tsx)
-   ──────────────────────────────────────────────────────────── */
 function TopRightMenu() {
   const [open, setOpen] = useState(false);
   return (

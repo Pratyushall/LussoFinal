@@ -3,7 +3,13 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import Footer from "@/components/footer"; // <-- Import footer
+import Footer from "@/components/footer";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function AboutLussoPage() {
   return (
@@ -11,20 +17,15 @@ export default function AboutLussoPage() {
       style={{ backgroundColor: "#0a1526" }}
       className="min-h-screen relative"
     >
-      <TopRightMenu /> {/* <-- Menu in the top-right */}
+      <TopRightMenu />
       <AboutHero />
       <OurStorySection />
       <TeamSection />
-      <ValuesSection />
-      <AwardsSection />
-      <Footer /> {/* <-- Footer at the bottom */}
+      <Footer />
     </div>
   );
 }
 
-/* ────────────────────────────────────────────────────────────
-   Top-right menu (reuse this across pages or move to app/layout.tsx)
-   ──────────────────────────────────────────────────────────── */
 function TopRightMenu() {
   const [open, setOpen] = useState(false);
   return (
@@ -43,7 +44,10 @@ function TopRightMenu() {
       {open && (
         <nav className="mt-2 w-56 rounded-2xl overflow-hidden border border-white/15 bg-[#0a1526]/95 backdrop-blur-md shadow-xl">
           {[
-            { label: "Home", href: "/" },
+            {
+              label: "Home",
+              href: "/",
+            },
             { label: "Products", href: "/products" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },
@@ -72,7 +76,6 @@ function AboutHero() {
       ref={sectionRef}
       className="min-h-screen relative overflow-hidden flex items-center justify-center pt-20"
     >
-      {/* Animated Background */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-r from-amber-500/10 to-pink-500/10 rounded-full blur-3xl"
@@ -190,22 +193,80 @@ function OurStorySection() {
 function TeamSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const [selectedMember, setSelectedMember] = useState<(typeof team)[0] | null>(
+    null
+  );
 
   const team = [
     {
       name: "Pranav Kondabathini",
       title: "Founder & Creative Director",
       image: "/images/prnv.jpg",
+      description:
+        "With over 15 years of experience in luxury interior design, Pranav founded LUSSO with a vision to create spaces that transcend ordinary living. His innovative approach combines classical elegance with contemporary aesthetics, earning him recognition across the industry.",
     },
     {
       name: "Shiva Pranav",
       title: "Head of Design",
       image: "/images/prnv.jpg",
+      description:
+        "Shiva leads our design team with a keen eye for detail and a passion for sustainable luxury. Her portfolio includes award-winning residential and commercial projects that seamlessly blend functionality with artistic expression.",
     },
     {
-      name: "Pranav",
+      name: "Pranav Kumar",
       title: "Project Director",
       image: "/images/prnv.jpg",
+      description:
+        "As Project Director, Pranav ensures every LUSSO project is executed flawlessly from concept to completion. His expertise in project management and client relations has been instrumental in delivering exceptional results on time and within budget.",
+    },
+    {
+      name: "Ananya Sharma",
+      title: "Senior Interior Architect",
+      image: "/images/prnv.jpg",
+      description:
+        "Ananya brings a unique perspective to spatial design, specializing in creating harmonious environments that reflect each client's personality. Her architectural background enables her to transform challenging spaces into stunning masterpieces.",
+    },
+    {
+      name: "Rohan Mehta",
+      title: "Materials & Finishes Specialist",
+      image: "/images/prnv.jpg",
+      description:
+        "Rohan's extensive knowledge of luxury materials and finishes ensures that every LUSSO project features the finest quality elements. He travels globally to source exclusive materials that add distinctive character to our designs.",
+    },
+    {
+      name: "Priya Desai",
+      title: "Lighting Design Consultant",
+      image: "/images/prnv.jpg",
+      description:
+        "Priya's expertise in lighting design transforms spaces through carefully curated illumination schemes. She believes that lighting is the soul of interior design, and her work creates ambiance that enhances every architectural detail.",
+    },
+    {
+      name: "Arjun Patel",
+      title: "3D Visualization Lead",
+      image: "/images/prnv.jpg",
+      description:
+        "Arjun heads our visualization team, bringing designs to life through photorealistic renderings. His technical prowess and artistic vision help clients visualize their dream spaces before construction begins.",
+    },
+    {
+      name: "Kavya Reddy",
+      title: "Client Relations Manager",
+      image: "/images/prnv.jpg",
+      description:
+        "Kavya ensures that every client's journey with LUSSO is seamless and enjoyable. Her dedication to understanding client needs and maintaining clear communication has built lasting relationships and trust.",
+    },
+    {
+      name: "Vikram Singh",
+      title: "Furniture & Decor Curator",
+      image: "/images/prnv.jpg",
+      description:
+        "Vikram curates bespoke furniture and decor pieces that complement our interior designs perfectly. His connections with artisans and luxury brands worldwide enable him to source unique pieces that make each project truly one-of-a-kind.",
+    },
+    {
+      name: "Neha Kapoor",
+      title: "Sustainability Advisor",
+      image: "/images/prnv.jpg",
+      description:
+        "Neha champions sustainable luxury at LUSSO, integrating eco-friendly practices without compromising on elegance. Her innovative approach to green design has positioned LUSSO as a leader in environmentally conscious luxury interiors.",
     },
   ];
 
@@ -222,164 +283,85 @@ function TeamSection() {
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {team.map((member, index) => (
             <motion.div
               key={index}
-              className="text-center group"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <div className="relative mb-6">
-                <img
-                  src={member.image || "/placeholder.svg"}
-                  alt={member.name}
-                  className="w-full aspect-square object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <h3 className="text-2xl font-light text-white mb-2">
-                {member.name}
-              </h3>
-              <p className="text-amber-400 mb-4">{member.title}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ValuesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  const values = [
-    {
-      title: "Excellence",
-      description:
-        "We pursue perfection in every detail, from concept to completion.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Innovation",
-      description:
-        "We embrace cutting-edge technology and forward-thinking design.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Sustainability",
-      description:
-        "We're committed to environmentally responsible luxury design.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Craftsmanship",
-      description:
-        "We honor traditional techniques while embracing modern methods.",
-      icon: "ᯓ★",
-    },
-  ];
-
-  return (
-    <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-5xl font-light text-white mb-6">Our Values</h2>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto" />
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => (
-            <motion.div
-              key={index}
-              className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500"
+              className="group relative cursor-pointer"
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -10 }}
+              onClick={() => setSelectedMember(member)}
             >
-              <div className="text-4xl mb-4">{value.icon}</div>
-              <h3 className="text-xl font-light text-white mb-4">
-                {value.title}
-              </h3>
-              <p className="text-white/70 leading-relaxed">
-                {value.description}
-              </p>
+              <div className="relative rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-amber-400/40 hover:bg-white/[0.05] hover:shadow-lg hover:shadow-amber-500/10">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative aspect-square overflow-hidden">
+                  <img
+                    src={member.image || "/placeholder.svg"}
+                    alt={member.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a1526]/90 via-[#0a1526]/20 to-transparent" />
+
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-10 h-10 rounded-full border-2 border-amber-400/80 bg-amber-400/10 backdrop-blur-sm flex items-center justify-center">
+                      <span className="text-amber-400 text-xl">+</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative p-4 text-center">
+                  <h3 className="text-sm font-light text-white mb-1 tracking-wide leading-tight">
+                    {member.name}
+                  </h3>
+                  <p className="text-xs text-amber-400/80 font-light tracking-wider uppercase leading-tight">
+                    {member.title}
+                  </p>
+                </div>
+
+                <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-amber-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
 
-function AwardsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  const awards = [
-    {
-      year: "2023",
-      title: "Best Luxury Interior Design",
-      organization: "International Design Awards",
-    },
-    {
-      year: "2022",
-      title: "Innovation in Sustainable Design",
-      organization: "Green Design Council",
-    },
-    {
-      year: "2021",
-      title: "Designer of the Year",
-      organization: "Luxury Living Magazine",
-    },
-    {
-      year: "2020",
-      title: "Excellence in Craftsmanship",
-      organization: "Artisan Guild",
-    },
-  ];
-
-  return (
-    <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
+        <Dialog
+          open={!!selectedMember}
+          onOpenChange={() => setSelectedMember(null)}
         >
-          <h2 className="text-5xl font-light text-white mb-6">Recognition</h2>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto" />
-        </motion.div>
+          <DialogContent className="max-w-2xl bg-[#0a1526] border-white/20 text-white">
+            {selectedMember && (
+              <div className="space-y-6">
+                <DialogHeader>
+                  <DialogTitle className="text-3xl font-light text-white">
+                    {selectedMember.name}
+                  </DialogTitle>
+                  <p className="text-amber-400 text-sm uppercase tracking-wider font-light">
+                    {selectedMember.title}
+                  </p>
+                </DialogHeader>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {awards.map((award, index) => (
-            <motion.div
-              key={index}
-              className="flex items-center space-x-6 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-            >
-              <div className="text-3xl font-light text-amber-400">
-                {award.year}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative aspect-square rounded-xl overflow-hidden border border-white/10">
+                    <img
+                      src={selectedMember.image || "/placeholder.svg"}
+                      alt={selectedMember.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div className="flex flex-col justify-center">
+                    <div className="w-16 h-px bg-gradient-to-r from-amber-400 to-transparent mb-4" />
+                    <p className="text-white/80 leading-relaxed">
+                      {selectedMember.description}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-light text-white mb-1">
-                  {award.title}
-                </h3>
-                <p className="text-white/60">{award.organization}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );

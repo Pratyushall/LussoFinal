@@ -6,7 +6,6 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/footer";
 
-/** Reusable blurred background */
 const BlurredBg: React.FC<{ src: string; overlayClass?: string }> = ({
   src,
   overlayClass = "bg-[#0a1526]/75",
@@ -34,7 +33,6 @@ export default function ContactPage() {
   );
 }
 
-/* ──────────────────────────────────────────────────────────── */
 function TopRightMenu() {
   const [open, setOpen] = useState(false);
   return (
@@ -79,7 +77,6 @@ function TopRightMenu() {
   );
 }
 
-/* ──────────────────────────────────────────────────────────── */
 function ContactHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
@@ -147,8 +144,6 @@ function ContactHero() {
   );
 }
 
-/* ──────────────────────────────────────────────────────────── */
-/* FULL-SCREEN: segmented toggle + neatly centered form card */
 function ContactFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
@@ -190,7 +185,6 @@ function ContactFormSection() {
             transition={{ duration: 0.6 }}
             className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 md:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
           >
-            {/* Segmented toggle (Lusso colors, no emojis) */}
             <div className="mb-8">
               <div className="grid grid-cols-2 rounded-2xl overflow-hidden border border-white/20">
                 <button
@@ -370,7 +364,6 @@ function ContactFormSection() {
                 />
               </Field>
 
-              {/* Submit — centered, not touching edges */}
               <div className="pt-2 flex justify-center">
                 <motion.button
                   type="submit"
@@ -395,8 +388,6 @@ function ContactFormSection() {
   );
 }
 
-/* ──────────────────────────────────────────────────────────── */
-/* FULL-SCREEN: centered, uniform contact cards with tidy alignment */
 function ContactInfoSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
@@ -502,7 +493,6 @@ function ContactInfoSection() {
   );
 }
 
-/* ───────────────────── helpers ───────────────────── */
 function Field({
   label,
   children,

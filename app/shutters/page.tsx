@@ -16,14 +16,29 @@ import Footer from "@/components/footer";
 type Tile = { src: string; alt: string };
 
 type ShutterType = {
-  key: "hinged" | "bifold" | "sliding";
+  key:
+    | "acrylic"
+    | "aluminiumFrame"
+    | "fabricCaneRattan"
+    | "glass"
+    | "laminate"
+    | "louvered"
+    | "profile"
+    | "puLacquered"
+    | "veneer";
   label: string;
 };
 
 const SHUTTER_TYPES: ShutterType[] = [
-  { key: "hinged", label: "Hinged" },
-  { key: "bifold", label: "Bi-Fold" },
-  { key: "sliding", label: "Sliding" },
+  { key: "acrylic", label: "Acrylic" },
+  { key: "aluminiumFrame", label: "Aluminium Frame Shutter" },
+  { key: "fabricCaneRattan", label: "Fabric cane rattan" },
+  { key: "glass", label: "glass shutters" },
+  { key: "laminate", label: "Laminate Shutters" },
+  { key: "louvered", label: "Louvered shutters" },
+  { key: "profile", label: "Profile shutters" },
+  { key: "puLacquered", label: "PU Lacquered shutters" },
+  { key: "veneer", label: "Veneer Shutters" },
 ];
 
 /* ---------------------------------------------
@@ -94,14 +109,13 @@ function Hero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl">
           <h1 className="text-6xl md:text-8xl font-thin text-white tracking-tight">
-            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-600 to-amber-800 bg-clip-text">
+            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-40 to-amber-400 bg-clip-text">
               Shutters
             </span>
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent my-6" />
           <p className="text-lg md:text-xl text-white/75 leading-relaxed">
-            Hinged, bi-fold, and sliding shutters — crafted for light, privacy,
-            and presence.
+            For light, privacy, and presence.
           </p>
         </div>
       </div>
@@ -134,9 +148,7 @@ function TypesNav() {
               <span
                 aria-hidden
                 className="ml-2 inline-block transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
+              ></span>
             </button>
           ))}
         </div>
@@ -149,79 +161,266 @@ function TypesNav() {
  * Sections per type — each = FULL-SCREEN framed slideshow
  * -------------------------------------------*/
 function TypesSections() {
-  // Swap these placeholders for your real images (6 each recommended).
-  const HINGED: Tile[] = [
+  // Drop 6 images for each type into /public/images using the exact filenames below
+  const ACRYLIC: Tile[] = [
     {
-      src: "/images/shutters-hinged1.jpg",
-      alt: "Hinged shutters, classic louvers",
-    },
-    { src: "/images/shutters-hinged2.jpg", alt: "Wide-panel hinged shutters" },
-    {
-      src: "/images/shutters-hinged3.jpg",
-      alt: "Hinged shutters with arch detail",
+      src: "/images/acrys1.png",
+      alt: "High-gloss acrylic shutter, seamless finish",
     },
     {
-      src: "/images/shutters-hinged4.jpg",
-      alt: "Matte white hinged shutters, bay window",
+      src: "/images/acrys2.png",
+      alt: "Acrylic shutters with integrated handles",
     },
     {
-      src: "/images/shutters-hinged5.jpg",
-      alt: "Walnut hinged shutters, living room",
+      src: "/images/acrys3.png",
+      alt: "Mirror-like acrylic, modern kitchen",
     },
     {
-      src: "/images/shutters-hinged6.jpg",
-      alt: "Hinged shutters with brass hardware",
-    },
-  ];
-  const BIFOLD: Tile[] = [
-    {
-      src: "/images/shutters-bifold1.jpg",
-      alt: "Bi-fold shutters, airy opening",
-    },
-    { src: "/images/shutters-bifold2.jpg", alt: "Bi-fold plantation shutters" },
-    { src: "/images/shutters-bifold3.jpg", alt: "Bi-fold with tall panels" },
-    {
-      src: "/images/shutters-bifold4.jpg",
-      alt: "Textured finish bi-fold shutters",
+      src: "/images/acrys4.png",
+      alt: "Acrylic fronts with soft edges",
     },
     {
-      src: "/images/shutters-bifold5.jpg",
-      alt: "Bi-fold shutters, modern frame",
+      src: "/images/acrys5.png",
+      alt: "Two-tone acrylic shutter composition",
     },
     {
-      src: "/images/shutters-bifold6.jpg",
-      alt: "Corner bi-fold shutters solution",
+      src: "/images/acrys6.png",
+      alt: "Matte acrylic variant, muted palette",
     },
   ];
-  const SLIDING: Tile[] = [
+
+  const ALUMINIUM_FRAME: Tile[] = [
     {
-      src: "/images/shutters-sliding1.jpg",
-      alt: "Sliding shutters, track system",
-    },
-    { src: "/images/shutters-sliding2.jpg", alt: "Wide-span sliding shutters" },
-    {
-      src: "/images/shutters-sliding3.jpg",
-      alt: "Sliding shutters with glass partition",
+      src: "/images/aluf1.png",
+      alt: "Aluminium frame shutter with glass infill",
     },
     {
-      src: "/images/shutters-sliding4.jpg",
-      alt: "Dark timber sliding shutters",
+      src: "/images/aluf2.png",
+      alt: "Slim brushed aluminium profile shutters",
     },
     {
-      src: "/images/shutters-sliding5.jpg",
-      alt: "Minimal sliding shutters, matte finish",
+      src: "/images/aluf3.png",
+      alt: "Dark anodized aluminium frame shutters",
     },
     {
-      src: "/images/shutters-sliding6.jpg",
-      alt: "Outdoor sliding shutter screen",
+      src: "/images/aluf4.png",
+      alt: "Aluminium frame with frosted panel",
     },
+    {
+      src: "/images/aluf5.png",
+      alt: "Wide-span aluminium shutter doors",
+    },
+    {
+      src: "/images/aluf6.png",
+      alt: "Aluminium frame with textured insert",
+    },
+  ];
+
+  const FABRIC_CANe_RATTAN: Tile[] = [
+    {
+      src: "/images/fcr1.png",
+      alt: "Cane/rattan shutter panel, airy weave",
+    },
+    {
+      src: "/images/fcr2.png",
+      alt: "Fabric-backed rattan shutters",
+    },
+    {
+      src: "/images/fcr3.png",
+      alt: "Warm cane weave in timber frame",
+    },
+    {
+      src: "/images/fcr4.png",
+      alt: "Rattan shutters with brass pulls",
+    },
+    {
+      src: "/images/fcr5.png",
+      alt: "Natural rattan, soft tropical style",
+    },
+    {
+      src: "/images/fcr6.png",
+      alt: "Fine-weave cane shutters, vintage look",
+    },
+  ];
+
+  const GLASS: Tile[] = [
+    {
+      src: "/images/gsh1.png",
+      alt: "Clear glass shutter with slim profiles",
+    },
+    { src: "/images/gsh2.png", alt: "Tinted glass shutter fronts" },
+    {
+      src: "/images/gsh3.png",
+      alt: "Fluted glass shutter, soft diffusion",
+    },
+    {
+      src: "/images/gsh4.png",
+      alt: "Frosted glass shutter in black frame",
+    },
+    {
+      src: "/images/gsh5.png",
+      alt: "Ribbed glass with bronze accents",
+    },
+    {
+      src: "/images/gsh6.png",
+      alt: "Smoked glass shutters, luxe feel",
+    },
+  ];
+
+  const LAMINATE: Tile[] = [
+    {
+      src: "/images/lash1.png",
+      alt: "Textured laminate shutter, oak tone",
+    },
+    {
+      src: "/images/lash2.png",
+      alt: "Matte laminate, handle-less groove",
+    },
+    {
+      src: "/images/lash3.png",
+      alt: "High-pressure laminate, durable finish",
+    },
+    {
+      src: "/images/lash4.png",
+      alt: "Stone-look laminate shutters",
+    },
+    {
+      src: "/images/lash5.png",
+      alt: "Warm walnut laminate, vertical grain",
+    },
+    {
+      src: "/images/lash6.png",
+      alt: "Monotone laminate with sleek lines",
+    },
+  ];
+
+  const LOUVERED: Tile[] = [
+    {
+      src: "/images/loush1.png",
+      alt: "Classic louvered shutter panels",
+    },
+    {
+      src: "/images/loush2.png",
+      alt: "Wide louver shutters, coastal vibe",
+    },
+    { src: "/images/loush3.png", alt: "Painted louvered shutters" },
+    {
+      src: "/images/loush4.png",
+      alt: "Timber louvered shutters, warm tone",
+    },
+    {
+      src: "/images/loush5.png",
+      alt: "Adjustable louvers for light control",
+    },
+    {
+      src: "/images/loush6.png",
+      alt: "Tall louvered doors, airy feel",
+    },
+  ];
+
+  const PROFILE: Tile[] = [
+    {
+      src: "/images/prosh1.png",
+      alt: "Profile shutters with shaker detailing",
+    },
+    {
+      src: "/images/prosh2.png",
+      alt: "Slim profile shutters, minimal routes",
+    },
+    {
+      src: "/images/prosh3.png",
+      alt: "Raised profile, classic kitchen style",
+    },
+    {
+      src: "/images/prosh4.png",
+      alt: "Deep-profile shutters, traditional look",
+    },
+    {
+      src: "/images/prosh5.png",
+      alt: "Contemporary profiled fronts",
+    },
+    {
+      src: "/images/prosh6.png",
+      alt: "Fine-profile shutters in muted hues",
+    },
+  ];
+
+  const PU_LACQUERED: Tile[] = [
+    {
+      src: "/images/pul1.png",
+      alt: "PU lacquered shutters, piano gloss",
+    },
+    { src: "/images/pul2.png", alt: "Soft-touch PU lacquer, matte" },
+    {
+      src: "/images/pul3.png",
+      alt: "Lacquered fronts with metallic tint",
+    },
+    {
+      src: "/images/pul4.png",
+      alt: "PU lacquer with integrated profile",
+    },
+    { src: "/images/pul5.png", alt: "Durable PU lacquer, deep color" },
+    {
+      src: "/images/pul6.png",
+      alt: "PU lacquered doors, seamless array",
+    },
+  ];
+
+  const VENEER: Tile[] = [
+    {
+      src: "/images/vens1.png",
+      alt: "Natural veneer shutters, rich grain",
+    },
+    {
+      src: "/images/vens2.png",
+      alt: "Chevron veneer pattern, premium",
+    },
+    {
+      src: "/images/vens3.png",
+      alt: "Quarter-cut veneer, refined look",
+    },
+    {
+      src: "/images/vens4.png",
+      alt: "Dark-stain veneer with brass",
+    },
+    {
+      src: "/images/vens5.png",
+      alt: "Light oak veneer, Scandinavian feel",
+    },
+    { src: "/images/vens6.png", alt: "Book-matched veneer fronts" },
   ];
 
   return (
     <>
-      <TypeBlock id="type-hinged" title="Hinged" images={HINGED} />
-      <TypeBlock id="type-bifold" title="Bi-Fold" images={BIFOLD} />
-      <TypeBlock id="type-sliding" title="Sliding" images={SLIDING} />
+      <TypeBlock id="type-acrylic" title="Acrylic" images={ACRYLIC} />
+      <TypeBlock
+        id="type-aluminiumFrame"
+        title="Aluminium Frame Shutter"
+        images={ALUMINIUM_FRAME}
+      />
+      <TypeBlock
+        id="type-fabricCaneRattan"
+        title="Fabric cane rattan"
+        images={FABRIC_CANe_RATTAN}
+      />
+      <TypeBlock id="type-glass" title="glass shutters" images={GLASS} />
+      <TypeBlock
+        id="type-laminate"
+        title="Laminate Shutters"
+        images={LAMINATE}
+      />
+      <TypeBlock
+        id="type-louvered"
+        title="Louvered shutters"
+        images={LOUVERED}
+      />
+      <TypeBlock id="type-profile" title="Profile shutters" images={PROFILE} />
+      <TypeBlock
+        id="type-puLacquered"
+        title="PU Lacquered shutters"
+        images={PU_LACQUERED}
+      />
+      <TypeBlock id="type-veneer" title="Veneer Shutters" images={VENEER} />
     </>
   );
 }

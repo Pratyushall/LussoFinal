@@ -24,7 +24,7 @@ export default function Header({ isScrolled }: HeaderProps) {
   const menuItems = [
     { label: "About Lusso", href: "/about" },
     { label: "Contact Us", href: "/contact" },
-    { label: "Portfolio", href: "/portfolio" },
+
     { label: "Products", href: "/products" },
   ];
 

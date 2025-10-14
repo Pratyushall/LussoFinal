@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
-export const runtime = "nodejs"; // make sure we're not on 'edge'
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
@@ -16,13 +16,11 @@ export async function POST(req: Request) {
       wardrobe,
       shutters,
       partitions,
-      website, // honeypot
+      website,
     } = body;
 
-    // honeypot: silently succeed for bots
     if (website) return NextResponse.json({ ok: true });
 
-    // ⬇️ NEW: options-object style constructor
     const auth = new google.auth.JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(
@@ -49,7 +47,6 @@ export async function POST(req: Request) {
       ],
     ];
 
-    // ⬇️ Use requestBody with modern googleapis
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: "Responses!A1",

@@ -16,15 +16,16 @@ import Footer from "@/components/footer";
 type Tile = { src: string; alt: string };
 
 type KitchenType = {
-  key: "islands" | "galley" | "lshape" | "gshape";
+  key: "island" | "lshape" | "parallel" | "straight" | "ushape";
   label: string;
 };
 
 const KITCHEN_TYPES: KitchenType[] = [
-  { key: "islands", label: "Islands" },
-  { key: "galley", label: "Galley" },
+  { key: "island", label: "Island" },
   { key: "lshape", label: "L-Shape" },
-  { key: "gshape", label: "G-Shape" },
+  { key: "parallel", label: "Parallel" },
+  { key: "straight", label: "Straight" },
+  { key: "ushape", label: "U-Shape" },
 ];
 
 /* ---------------------------------------------
@@ -95,14 +96,14 @@ function Hero() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl">
           <h1 className="text-6xl md:text-8xl font-thin text-white tracking-tight">
-            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-600 to-amber-800 bg-clip-text">
+            <span className="text-transparent bg-gradient-to-r from-amber-400 via-amber-400 to-amber-400 bg-clip-text">
               Kitchens
             </span>
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent my-6" />
           <p className="text-lg md:text-xl text-white/75 leading-relaxed">
-            Islands, galley, L and G — crafted for daily theatre and effortless
-            flow.
+            Island, L, Parallel, Straight, and U—crafted for daily theatre and
+            effortless flow.
           </p>
         </div>
       </div>
@@ -135,9 +136,7 @@ function TypesNav() {
               <span
                 aria-hidden
                 className="ml-2 inline-block transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
+              ></span>
             </button>
           ))}
         </div>
@@ -150,45 +149,75 @@ function TypesNav() {
  * Sections per type — each = FULL-SCREEN framed slideshow
  * -------------------------------------------*/
 function TypesSections() {
-  const ISLANDS: Tile[] = [
-    { src: "/images/herki.png", alt: "Stone waterfall edge island" },
-    { src: "/images/islanda.jpg", alt: "Island centerpiece with stone top" },
-    { src: "/images/islandb.jpg", alt: "Two-tone island with seating" },
-    { src: "/images/islandc.jpg", alt: "Warm wood island, brass accents" },
-    { src: "/images/islande.jpg", alt: "Monolithic island, matte finish" },
-    { src: "/images/islandf.jpg", alt: "Open-plan island with bar stools" },
+  // NOTE: Replace any placeholder file names with your actual assets in /public/images
+
+  const ISLAND: Tile[] = [
+    { src: "/images/isl1.png", alt: "Stone waterfall edge island" },
+    { src: "/images/isl2.png", alt: "Island centerpiece with stone top" },
+    { src: "/images/isl3.png", alt: "Two-tone island with seating" },
+    { src: "/images/isl4.png", alt: "Warm wood island, brass accents" },
+    { src: "/images/isl5.png", alt: "Monolithic island, matte finish" },
+    { src: "/images/isl6.png", alt: "Open-plan island with bar stools" },
   ];
-  const GALLEY: Tile[] = [
-    { src: "/images/herki1.png", alt: "High-contrast galley cabinetry" },
-    { src: "/images/gal1.jpg", alt: "Compact galley elegance" },
-    { src: "/images/gal2.jpg", alt: "Light & bright galley" },
-    { src: "/images/gal3.jpg", alt: "Galley with statement pendants" },
-    { src: "/images/gal5.jpg", alt: "Warm wood galley with brass" },
-    { src: "/images/gal6.jpg", alt: "Sleek galley, handle-less units" },
-  ];
+
   const LSHAPE: Tile[] = [
-    { src: "/images/herki2.png", alt: "Matte L-shape with open shelving" },
-    { src: "/images/Lshp1.jpg", alt: "L-shape, warm wood" },
-    { src: "/images/Lshp2.jpg", alt: "L-shape, veneer + stone harmony" },
-    { src: "/images/Lshp3.jpg", alt: "Minimal L-shape with island vibe" },
-    { src: "/images/Lshp4.jpg", alt: "Bright L-shape, integrated lighting" },
-    { src: "/images/Lshp6.jpg", alt: "Elegant L-shape with tall units" },
+    { src: "/images/ls1.png", alt: "Matte L-shape with open shelving" },
+    { src: "/images/ls2.png", alt: "L-shape, warm wood" },
+    { src: "/images/ls3.jpg", alt: "L-shape, veneer + stone harmony" },
+    { src: "/images/ls4.jpg", alt: "Minimal L-shape with island vibe" },
+    { src: "/images/ls5.jpg", alt: "Bright L-shape, integrated lighting" },
+    { src: "/images/ls6.jpg", alt: "Elegant L-shape with tall units" },
   ];
-  const GSHAPE: Tile[] = [
-    { src: "/images/herki3.png", alt: "Wraparound G-shape, stone splash" },
-    { src: "/images/gshp1.jpg", alt: "G-shape storage master" },
-    { src: "/images/gshp2.jpg", alt: "G-shape with family nook" },
-    { src: "/images/gshp3.jpg", alt: "Compact city G-shape" },
-    { src: "/images/gshp5.jpg", alt: "G-shape, premium appliances" },
-    { src: "/images/gshp6.jpg", alt: "G-shape, soft minimal palette" },
+
+  // Parallel ≈ former "Galley"
+  const PARALLEL: Tile[] = [
+    { src: "/images/par1.png", alt: "High-contrast parallel cabinetry" },
+    { src: "/images/par2.png", alt: "Compact parallel elegance" },
+    { src: "/images/par3.png", alt: "Light & bright parallel layout" },
+    { src: "/images/par4.png", alt: "Parallel with statement pendants" },
+    { src: "/images/par5.png", alt: "Warm wood parallel with brass" },
+    { src: "/images/par6.png", alt: "Sleek parallel, handle-less units" },
+  ];
+
+  // Straight (single-wall) — placeholder filenames; swap for your real images
+  const STRAIGHT: Tile[] = [
+    {
+      src: "/images/str1.png",
+      alt: "Single-wall kitchen with open shelving",
+    },
+    {
+      src: "/images/str2.png",
+      alt: "Minimal one-wall with integrated appliances",
+    },
+    { src: "/images/str3.png", alt: "Straight layout with tall pantry" },
+    {
+      src: "/images/str4.png",
+      alt: "Bright single-wall with undercabinet lighting",
+    },
+    { src: "/images/str5.png", alt: "Compact studio one-wall solution" },
+    {
+      src: "/images/str6.png",
+      alt: "Monochrome straight kitchen, matte finish",
+    },
+  ];
+
+  // U-Shape ≈ former "G-shape"
+  const USHAPE: Tile[] = [
+    { src: "/images/us1.png", alt: "Wraparound U-shape, stone splash" },
+    { src: "/images/us3.png", alt: "U-shape storage master" },
+    { src: "/images/us4.png", alt: "U-shape with family nook" },
+    { src: "/images/us5.png", alt: "Compact city U-shape" },
+    { src: "/images/us6.png", alt: "U-shape, premium appliances" },
+    { src: "/images/us7.jpg", alt: "U-shape, soft minimal palette" },
   ];
 
   return (
     <>
-      <TypeBlock id="type-islands" title="Islands" images={ISLANDS} />
-      <TypeBlock id="type-galley" title="Galley" images={GALLEY} />
+      <TypeBlock id="type-island" title="Island" images={ISLAND} />
       <TypeBlock id="type-lshape" title="L-Shape" images={LSHAPE} />
-      <TypeBlock id="type-gshape" title="G-Shape" images={GSHAPE} />
+      <TypeBlock id="type-parallel" title="Parallel" images={PARALLEL} />
+      <TypeBlock id="type-straight" title="Straight" images={STRAIGHT} />
+      <TypeBlock id="type-ushape" title="U-Shape" images={USHAPE} />
     </>
   );
 }
@@ -228,7 +257,7 @@ function FullscreenWoodFrame({
     <div className="relative h-[100svh] w-[100vw] overflow-hidden">
       {/* Background: wooden frame image */}
       <Image
-        src="/images/frame5.png" // put frame2.png in /public/images/
+        src="/images/frame5.png"
         alt=""
         fill
         priority={false}
@@ -258,9 +287,6 @@ function FullscreenWoodFrame({
 
 /* ---------------------------------------------
  * SlideshowCore
- * - Autoplay (pauses while hovering center zone)
- * - Arrows, dots, keyboard, swipe
- * - Center hover overlay shows the type label
  * -------------------------------------------*/
 function SlideshowCore({
   images,
@@ -346,7 +372,7 @@ function SlideshowCore({
         })}
       </div>
 
-      {/* Center hover sensor (only middle area shows the label) */}
+      {/* Center hover sensor */}
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/5 h-3/5 max-w-[640px] max-h-[60vh] z-20"
         onMouseEnter={() => setHoveringCenter(true)}
