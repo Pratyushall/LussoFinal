@@ -1,55 +1,48 @@
+// app/api/contact/route.ts
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-// Initialize Resend with API key from environment variables
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { name, email, phone, message, audience } = body;
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
-    // Validate required fields
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { success: false, error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
-    // Format the email content
-    const emailContent = `
-New Contact Form Submission
-
-From: ${name}
-Email: ${email}
-Phone: ${phone || "Not provided"}
-Type: ${audience === "partner" ? "Partnership Inquiry" : "Homeowner Inquiry"}
-
-Message:
-${message}
-    `.trim();
-
-    // Send email using Resend
-    // Replace 'info@lussointeriors.in' with your verified sender email in Resend
-    const data = await resend.emails.send({
-      from: "LUSSO Contact Form <onboarding@resend.dev>", // Use your verified domain
-      to: ["info@lussointeriors.in"], // Your receiving email
-      replyTo: email, // User's email for easy replies
-      subject: `New ${
-        audience === "partner" ? "Partnership" : "Contact"
-      } Inquiry from ${name}`,
-      text: emailContent,
-    });
-
-    console.log("[v0] Email sent successfully:", data);
-
-    return NextResponse.json({ success: true, data });
-  } catch (error: any) {
-    console.error("[v0] Error sending email:", error);
+export async function POST(req: Request) {
+  const data = await req.json().catch(() => ({}));
+  const { name = "", email = "", message = "" } = data;
+  if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to send email" },
+      { ok: false, error: "invalid_input" },
+      { status: 400 }
+    );
+  }
+  if (!resend)
+    return NextResponse.json(
+      { ok: false, error: "missing_api_key" },
+      { status: 500 }
+    );
+  if (!process.env.CONTACT_FROM || !process.env.CONTACT_TO) {
+    return NextResponse.json(
+      { ok: false, error: "missing_from_or_to" },
       { status: 500 }
     );
   }
+
+  const result = await resend.emails.send({
+    from: process.env.CONTACT_FROM!,
+    to: process.env.CONTACT_TO!,
+    replyTo: email,
+    subject: `New enquiry from ${name} — Lusso website`,
+    text: `From: ${name} <${email}>\n\n${message}`,
+  });
+
+  if ((result as any)?.error) {
+    return NextResponse.json(
+      { ok: false, error: (result as any).error?.message || "send_failed" },
+      { status: 502 }
+    );
+  }
+  return NextResponse.json({ ok: true });
 }
