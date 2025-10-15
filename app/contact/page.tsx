@@ -12,7 +12,7 @@ const BlurredBg: React.FC<{ src: string; overlayClass?: string }> = ({
 }) => (
   <>
     <img
-      src={src}
+      src={src || "/placeholder.svg"}
       alt=""
       aria-hidden
       className="absolute inset-0 w-full h-full object-cover blur-md scale-110"
@@ -104,7 +104,11 @@ function ContactHero() {
                 "0 0 30px rgba(255,255,255,0.1)",
               ],
             }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: 4,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
           >
             Contact{" "}
             <span
@@ -112,9 +116,9 @@ function ContactHero() {
               style={{
                 backgroundImage: `linear-gradient(
                   to right,
-                  rgba(213, 175, 46, 0.9),
-                  rgba(213, 175, 46, 1),
-                  rgba(150, 120, 30, 1)
+                  rgba(59, 130, 246, 0.9),
+                  rgba(37, 99, 235, 1),
+                  rgba(29, 78, 216, 1)
                 )`,
               }}
             >
@@ -123,7 +127,7 @@ function ContactHero() {
           </motion.h1>
 
           <motion.div
-            className="w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-8"
+            className="w-32 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mb-8"
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -144,9 +148,8 @@ function ContactHero() {
   );
 }
 
-// Shared select styling (dark dropdown + amber focus)
 const selectClass =
-  "w-full px-4 py-3 rounded-xl bg-[#1f2737] text-white border border-white/20 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 transition-all duration-300";
+  "w-full px-4 py-3 rounded-xl bg-[#1f2737] text-white border border-white/20 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all duration-300";
 
 function ContactFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -168,7 +171,7 @@ function ContactFormSection() {
     budget: "",
     company: "",
     partnership: "",
-    role: "", // renamed from website to avoid honeypot clash
+    role: "",
   });
 
   const handleInputChange = (
@@ -178,16 +181,16 @@ function ContactFormSection() {
   ) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault(); // stop page refresh
+    e.preventDefault();
     setLoading(true);
     setOk(null);
     setErr(null);
 
-    // Build payload expected by contact.php
     const payload: any = {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
+      audience: audience,
       message:
         (audience === "partner"
           ? `[PARTNER ENQUIRY]\nCompany: ${
@@ -199,21 +202,18 @@ function ContactFormSection() {
               formData.projectType || "-"
             }\nBudget: ${formData.budget || "-"}\n\n`) +
         (formData.message || ""),
-      // IMPORTANT: keep spam honeypot empty for backend
-      website: "",
     };
 
     try {
-      const res = await fetch("/contact.php", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       const json = await res.json().catch(() => ({}));
-      if (json?.ok) {
+      if (json?.success) {
         setOk(true);
         (e.currentTarget as HTMLFormElement).reset();
-        // clear state
         setFormData({
           name: "",
           email: "",
@@ -262,7 +262,7 @@ function ContactFormSection() {
                   className={`py-4 md:py-5 text-base md:text-lg font-medium tracking-wide transition-all
                     ${
                       audience === "homeowner"
-                        ? "bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#0a1526] shadow-inner"
+                        ? "bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white shadow-inner"
                         : "bg-white text-[#0a1526]"
                     } 
                   `}
@@ -276,7 +276,7 @@ function ContactFormSection() {
                   className={`py-4 md:py-5 text-base md:text-lg font-medium tracking-wide transition-all
                     ${
                       audience === "partner"
-                        ? "bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#0a1526] shadow-inner"
+                        ? "bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white shadow-inner"
                         : "bg-[#1f2737] text-white"
                     } 
                   `}
@@ -286,7 +286,6 @@ function ContactFormSection() {
               </div>
             </div>
 
-            {/* Form */}
             <motion.form
               onSubmit={onSubmit}
               className="space-y-6"
@@ -294,7 +293,6 @@ function ContactFormSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.15 }}
             >
-              {/* Honeypot: must remain empty for spam check */}
               <input
                 type="text"
                 name="website"
@@ -313,7 +311,7 @@ function ContactFormSection() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300"
                     placeholder={
                       audience === "partner"
                         ? "Your name"
@@ -328,7 +326,7 @@ function ContactFormSection() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300"
                     placeholder="your.email@example.com"
                   />
                 </Field>
@@ -341,7 +339,7 @@ function ContactFormSection() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300"
                     placeholder="+91 9XXXX XXXXX"
                   />
                 </Field>
@@ -368,7 +366,7 @@ function ContactFormSection() {
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300"
                       placeholder="Company / Studio name"
                     />
                   </Field>
@@ -413,10 +411,10 @@ function ContactFormSection() {
                   <Field label="Role / Website (optional)">
                     <input
                       type="text"
-                      name="role" // not "website" to avoid honeypot
+                      name="role"
                       value={formData.role}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300"
                       placeholder="e.g., Principal Architect / https://…"
                     />
                   </Field>
@@ -436,24 +434,23 @@ function ContactFormSection() {
                   onChange={handleInputChange}
                   rows={5}
                   required
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300 resize-none"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-500 focus:bg-white/15 transition-all duration-300 resize-none"
                   placeholder={
                     audience === "partner"
-                      ? "Tell us about your firm, region, typical project sizes, and what you’re looking for."
+                      ? "Tell us about your firm, region, typical project sizes, and what you're looking for."
                       : "Tell us about your vision, timeline, and any specific requirements…"
                   }
                 />
               </Field>
 
-              {/* Status messages */}
               {ok === true && (
                 <div className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 text-emerald-200 px-4 py-3">
-                  Thanks! We’ll get back to you soon.
+                  Thanks! We'll get back to you soon.
                 </div>
               )}
               {ok === false && (
                 <div className="rounded-lg border border-red-400/30 bg-red-400/10 text-red-200 px-4 py-3">
-                  Couldn’t send{err ? ` (${err})` : ""}. Please try again.
+                  Couldn't send{err ? ` (${err})` : ""}. Please try again.
                 </div>
               )}
 
@@ -462,10 +459,10 @@ function ContactFormSection() {
                   type="submit"
                   disabled={loading}
                   className="px-10 sm:px-12 py-4 rounded-full
-                             bg-gradient-to-r from-amber-500 to-amber-600
-                             text-black font-light tracking-wide
-                             shadow-[0_8px_24px_rgba(251,191,36,0.25)]
-                             hover:shadow-[0_12px_36px_rgba(251,191,36,0.35)]
+                             bg-gradient-to-r from-blue-600 to-blue-700
+                             text-white font-light tracking-wide
+                             shadow-[0_8px_24px_rgba(59,130,246,0.25)]
+                             hover:shadow-[0_12px_36px_rgba(59,130,246,0.35)]
                              transition-all duration-300
                              w-full sm:w-auto sm:min-w-[220px] mx-auto disabled:opacity-60"
                   whileHover={{ scale: loading ? 1 : 1.02 }}
@@ -615,7 +612,7 @@ function InfoCard({
 }) {
   return (
     <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 text-center flex flex-col items-center justify-center gap-3">
-      <div className="text-amber-300/90">{svg}</div>
+      <div className="text-blue-400/90">{svg}</div>
       <h4 className="text-white font-light">{title}</h4>
       <div className="text-white/75 text-sm leading-relaxed">
         {lines.map((l, i) => (

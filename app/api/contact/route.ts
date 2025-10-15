@@ -1,59 +1,54 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+// Initialize Resend with API key from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
-const CONTACT_FROM = process.env.CONTACT_FROM!;
-const CONTACT_TO = process.env.CONTACT_TO!;
 
-function isEmail(v: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const {
-      name = "",
-      email = "",
-      phone = "",
-      message = "",
-      website = "",
-    } = await req.json().catch(() => ({}));
+    const body = await request.json();
+    const { name, email, phone, message, audience } = body;
 
-    // honeypot
-    if (website) return NextResponse.json({ ok: true });
-
-    if (!name || !message || !isEmail(email)) {
+    // Validate required fields
+    if (!name || !email || !message) {
       return NextResponse.json(
-        { ok: false, error: "invalid_input" },
+        { success: false, error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const subject = `New enquiry from ${name} — Lusso website`;
-    const text = [
-      `From: ${name} <${email}>`,
-      phone ? `Phone: ${phone}` : "",
-      "",
-      "Message:",
-      message,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    // Format the email content
+    const emailContent = `
+New Contact Form Submission
 
-    await resend.emails.send({
-      from: CONTACT_FROM, // e.g., "Lusso Website <website@lussointeriors.in>"
-      to: CONTACT_TO, // your current inbox
-      replyTo: email, // you can reply straight to the sender
-      subject,
-      text,
-      // (optional) html,
+From: ${name}
+Email: ${email}
+Phone: ${phone || "Not provided"}
+Type: ${audience === "partner" ? "Partnership Inquiry" : "Homeowner Inquiry"}
+
+Message:
+${message}
+    `.trim();
+
+    // Send email using Resend
+    // Replace 'info@lussointeriors.in' with your verified sender email in Resend
+    const data = await resend.emails.send({
+      from: "LUSSO Contact Form <onboarding@resend.dev>", // Use your verified domain
+      to: ["info@lussointeriors.in"], // Your receiving email
+      replyTo: email, // User's email for easy replies
+      subject: `New ${
+        audience === "partner" ? "Partnership" : "Contact"
+      } Inquiry from ${name}`,
+      text: emailContent,
     });
 
-    return NextResponse.json({ ok: true });
-  } catch (e) {
-    console.error(e);
+    console.log("[v0] Email sent successfully:", data);
+
+    return NextResponse.json({ success: true, data });
+  } catch (error: any) {
+    console.error("[v0] Error sending email:", error);
     return NextResponse.json(
-      { ok: false, error: "send_failed" },
+      { success: false, error: error.message || "Failed to send email" },
       { status: 500 }
     );
   }
