@@ -23,7 +23,7 @@ const BRANDS: Brand[] = [
   { name: "Grayzo", logo: "/images/grayzo.png" },
   { name: "Forever", logo: "/images/forever.png" },
   { name: "Dyson", logo: "/images/dyson.png" },
-  { name: "ceasertone", logo: "/images/ceaserstone.png" }, // ← ensure this filename is correct
+  { name: "ceasertone", logo: "/images/ceaserstone.png" }, // ensure filename is correct
   { name: "Wesmark", logo: "/images/wesmark.png" },
 ];
 
@@ -55,8 +55,8 @@ export default function BrandsCollaborationSection() {
 
       {/* FULL-BLEED WHITE RIBBON */}
       <div className="w-screen max-w-[100vw] mx-[calc(50%-50vw)] relative">
-        {/* Ribbon */}
-        <div className="relative h-[220px] md:h-[240px] bg-white">
+        {/* Ribbon (taller to accommodate bigger logos) */}
+        <div className="relative h-[280px] md:h-[320px] bg-white">
           {/* soft lift */}
           <div className="pointer-events-none absolute inset-x-0 -top-4 h-4 bg-gradient-to-b from-black/15 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 -bottom-4 h-4 bg-gradient-to-t from-black/15 to-transparent" />
@@ -64,9 +64,9 @@ export default function BrandsCollaborationSection() {
           {/* Lanes (above ribbon) */}
           <div className="absolute inset-0 overflow-hidden z-10">
             {/* Lane 1: left -> right */}
-            <div className="absolute top-[25%] -translate-y-1/2 left-0 right-0">
+            <div className="absolute top-[28%] -translate-y-1/2 left-0 right-0">
               <div
-                className="flex items-center gap-5 md:gap-8 w-[200%]"
+                className="flex items-center gap-7 md:gap-10 w-[200%]"
                 style={{
                   transform: "translateX(0)",
                   animation: reduced
@@ -86,9 +86,9 @@ export default function BrandsCollaborationSection() {
             </div>
 
             {/* Lane 2: right -> left */}
-            <div className="absolute bottom-[25%] translate-y-1/2 left-0 right-0">
+            <div className="absolute bottom-[28%] translate-y-1/2 left-0 right-0">
               <div
-                className="flex items-center gap-5 md:gap-8 w-[200%] justify-end"
+                className="flex items-center gap-7 md:gap-10 w-[200%] justify-end"
                 style={{
                   transform: "translateX(-50%)",
                   animation: reduced
@@ -146,11 +146,11 @@ function LogoPill({
   priority?: boolean;
 }) {
   return (
-    <div className="h-[100px] md:h-[84px] flex items-center justify-center">
+    <div className="h-[140px] md:h-[160px] flex items-center justify-center">
       <div
         className="
           flex items-center justify-center
-          h-[70px] md:h-[92px] min-w-[125px] md:min-w-[150px]
+          h-[120px] md:h-[140px] min-w-[220px] md:min-w-[260px]
           px-8 md:px-10
           rounded-2xl
           bg-[#edeef0]
@@ -161,15 +161,15 @@ function LogoPill({
         <Image
           src={logo}
           alt={`${name} logo`}
-          height={200}
-          width={160}
+          height={360}
+          width={360}
           className="
-            object-contain h-8 md:h-10 w-auto
+            object-contain h-24 md:h-28 w-auto
             opacity-95
             drop-shadow-[0_0_1px_rgba(0,0,0,0.25)]
             contrast-125
           "
-          sizes="(max-width: 768px) 25vw, (max-width: 1280px) 15vw, 12vw"
+          sizes="(max-width: 768px) 40vw, (max-width: 1280px) 24vw, 18vw"
           priority={priority}
         />
       </div>

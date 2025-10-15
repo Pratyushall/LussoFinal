@@ -8,9 +8,7 @@ export default function AboutLussoPage() {
     <div style={{ backgroundColor: "#0a1526" }} className="min-h-screen">
       <AboutHero />
       <OurStorySection />
-      <TeamSection />
-      <ValuesSection />
-      <AwardsSection />
+      <FounderSection />
     </div>
   );
 }
@@ -152,202 +150,214 @@ function OurStorySection() {
   );
 }
 
-function TeamSection() {
+function FounderSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  const team = [
-    {
-      name: "Alessandro Rossi",
-      title: "Founder & Creative Director",
-      image: "/images/pic2.png",
-      bio: "With over 20 years of experience in luxury design, Alessandro brings European elegance to every project.",
-    },
-    {
-      name: "Sophia Chen",
-      title: "Head of Design",
-      image: "/images/pic3.png",
-      bio: "Sophia's innovative approach combines modern aesthetics with timeless functionality.",
-    },
-    {
-      name: "Marcus Williams",
-      title: "Project Director",
-      image: "/images/pic4.png",
-      bio: "Marcus ensures every project is delivered with precision, quality, and attention to detail.",
-    },
-  ];
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
-    <section ref={sectionRef} className="py-32 relative overflow-hidden">
+    <section ref={sectionRef} className="py-40 relative overflow-hidden">
+      {/* Animated Luxury Background Elements */}
+      <motion.div
+        className="absolute top-1/4 right-10 w-[600px] h-[600px] bg-gradient-to-br from-amber-500/5 via-pink-500/5 to-purple-500/5 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.3, 1],
+          rotate: [0, 90, 0],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-1/4 left-10 w-[500px] h-[500px] bg-gradient-to-tr from-amber-400/5 to-pink-400/5 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          rotate: [90, 0, 90],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+
       <div className="container mx-auto px-6 relative z-10">
+        {/* Section Title */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-24"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1 }}
         >
-          <h2 className="text-5xl font-light text-white mb-6">Our Team</h2>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto" />
+          <motion.h2
+            className="text-6xl font-thin text-white mb-6 tracking-wide"
+            animate={{
+              textShadow: [
+                "0 0 20px rgba(213, 175, 46, 0.1)",
+                "0 0 40px rgba(213, 175, 46, 0.3)",
+                "0 0 20px rgba(213, 175, 46, 0.1)",
+              ],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          >
+            The Visionary
+          </motion.h2>
+          <motion.div
+            className="w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.5, delay: 0.3 }}
+          />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-12">
-          {team.map((member, index) => (
+        {/* Founder Content */}
+        <div className="grid lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
+          {/* Founder Image with Fancy Frame */}
+          <motion.div
+            className="relative order-2 lg:order-1"
+            initial={{ opacity: 0, x: -100, rotateY: -15 }}
+            animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.4 }}
+          >
+            {/* Decorative Corner Elements */}
             <motion.div
-              key={index}
-              className="text-center group"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-amber-400/50"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            />
+            <motion.div
+              className="absolute -bottom-6 -right-6 w-24 h-24 border-b-2 border-r-2 border-amber-400/50"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            />
+
+            {/* Main Image Container */}
+            <motion.div
+              className="relative aspect-[3/4] rounded-3xl overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="relative mb-6">
-                <img
-                  src={member.image || "/placeholder.svg"}
-                  alt={member.name}
-                  className="w-full aspect-square object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <h3 className="text-2xl font-light text-white mb-2">
-                {member.name}
-              </h3>
-              <p className="text-amber-400 mb-4">{member.title}</p>
-              <p className="text-white/70 leading-relaxed">{member.bio}</p>
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1526] via-transparent to-transparent z-10 opacity-60" />
+
+              {/* Animated Border */}
+              <motion.div
+                className="absolute inset-0 z-20"
+                style={{
+                  background: `linear-gradient(90deg, 
+                    transparent 0%, 
+                    rgba(213, 175, 46, 0.5) 50%, 
+                    transparent 100%)`,
+                }}
+                animate={{
+                  x: ["-100%", "200%"],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                  repeatDelay: 5,
+                }}
+              />
+
+              <img
+                src="/distinguished-luxury-interior-designer-founder-por.jpg"
+                alt="Founder"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+          </motion.div>
 
-function ValuesSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+          {/* Founder Text Content */}
+          <motion.div
+            className="order-1 lg:order-2 space-y-8"
+            initial={{ opacity: 0, x: 100 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.6 }}
+          >
+            {/* Name and Title */}
+            <div>
+              <motion.h3
+                className="text-5xl font-light text-white mb-3 tracking-wide"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                Alessandro{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+                  Rossi
+                </span>
+              </motion.h3>
+              <motion.p
+                className="text-xl text-amber-400/90 font-light tracking-widest uppercase"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                Founder & Creative Director
+              </motion.p>
+            </div>
 
-  const values = [
-    {
-      title: "Excellence",
-      description:
-        "We pursue perfection in every detail, from concept to completion.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Innovation",
-      description:
-        "We embrace cutting-edge technology and forward-thinking design.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Sustainability",
-      description:
-        "We're committed to environmentally responsible luxury design.",
-      icon: "ᯓ★",
-    },
-    {
-      title: "Craftsmanship",
-      description:
-        "We honor traditional techniques while embracing modern methods.",
-      icon: "ᯓ★",
-    },
-  ];
-
-  return (
-    <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-5xl font-light text-white mb-6">Our Values</h2>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto" />
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => (
+            {/* Decorative Divider */}
             <motion.div
-              key={index}
-              className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -10 }}
+              className="w-20 h-px bg-gradient-to-r from-amber-400 to-transparent"
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 1, delay: 1 }}
+            />
+
+            {/* Biography */}
+            <motion.div
+              className="space-y-6 text-white/80 leading-relaxed text-lg"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 1, delay: 1.1 }}
             >
-              <div className="text-4xl mb-4">{value.icon}</div>
-              <h3 className="text-xl font-light text-white mb-4">
-                {value.title}
-              </h3>
-              <p className="text-white/70 leading-relaxed">
-                {value.description}
+              <p className="text-pretty">
+                With over two decades of experience crafting extraordinary
+                spaces, Alessandro Rossi has established himself as one of the
+                world's most sought-after luxury interior designers. His
+                philosophy merges timeless European elegance with contemporary
+                innovation.
+              </p>
+              <p className="text-pretty">
+                Trained at the prestigious Politecnico di Milano and having
+                worked alongside legendary designers in Paris and Milan,
+                Alessandro founded LUSSO with a singular vision: to create
+                spaces that transcend mere aesthetics and become transformative
+                experiences.
+              </p>
+              <p className="text-pretty">
+                His work has graced the pages of Architectural Digest, Elle
+                Decor, and Wallpaper*, earning him recognition as a pioneer in
+                sustainable luxury design. Each project reflects his unwavering
+                commitment to excellence, innovation, and the art of living
+                beautifully.
               </p>
             </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function AwardsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  const awards = [
-    {
-      year: "2023",
-      title: "Best Luxury Interior Design",
-      organization: "International Design Awards",
-    },
-    {
-      year: "2022",
-      title: "Innovation in Sustainable Design",
-      organization: "Green Design Council",
-    },
-    {
-      year: "2021",
-      title: "Designer of the Year",
-      organization: "Luxury Living Magazine",
-    },
-    {
-      year: "2020",
-      title: "Excellence in Craftsmanship",
-      organization: "Artisan Guild",
-    },
-  ];
-
-  return (
-    <section ref={sectionRef} className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-5xl font-light text-white mb-6">Recognition</h2>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto" />
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {awards.map((award, index) => (
+            {/* Signature */}
             <motion.div
-              key={index}
-              className="flex items-center space-x-6 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className="pt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 1.3 }}
             >
-              <div className="text-3xl font-light text-amber-400">
-                {award.year}
-              </div>
-              <div>
-                <h3 className="text-lg font-light text-white mb-1">
-                  {award.title}
-                </h3>
-                <p className="text-white/60">{award.organization}</p>
+              <div className="text-4xl font-light text-amber-400/60 italic">
+                Sairaj Kondabathini
               </div>
             </motion.div>
-          ))}
+          </motion.div>
         </div>
       </div>
     </section>

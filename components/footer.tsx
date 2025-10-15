@@ -23,7 +23,7 @@ export default function Footer() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/footer2.png" // keep your shutter backdrop here
+          src="/images/footer2.png"
           alt=""
           fill
           priority={false}
@@ -35,20 +35,12 @@ export default function Footer() {
       </div>
 
       {/* Centered content box */}
-      <div
-        className="
-          relative z-10
-          min-h-[60vh]
-          flex items-center justify-center
-          px-6 py-16
-          text-center
-        "
-      >
+      <div className="relative z-10 min-h-[60vh] flex items-center justify-center px-6 py-16 text-center">
         <div className="max-w-3xl w-full space-y-10">
-          {/* Brand image (replaces text) */}
+          {/* Brand image */}
           <div className="flex flex-col items-center gap-4">
             <Image
-              src="/images/footerlo1.png" // <- your LUSSO + tagline image
+              src="/images/footerlo1.png"
               alt="LUSSO — Luxury Simplified"
               width={280}
               height={56}
@@ -58,7 +50,7 @@ export default function Footer() {
             />
           </div>
 
-          {/* Buttons (only two) */}
+          {/* Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
             <Link href="/products" className={buttonClass}>
               Products
@@ -68,13 +60,38 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* Social icons only */}
+          {/* Social icons */}
           <div className="flex items-center justify-center gap-5">
+            {/* YouTube */}
+            <a
+              href="https://www.youtube.com/@Lussoxsh"
+              aria-label="YouTube"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-90 hover:opacity-100 transition"
+              title="YouTube"
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <rect
+                  x="3"
+                  y="6"
+                  width="18"
+                  height="12"
+                  rx="3"
+                  stroke="white"
+                  strokeOpacity="0.85"
+                />
+                <path d="M11 15V9l5 3-5 3z" fill="white" />
+              </svg>
+            </a>
             {/* Instagram */}
             <a
-              href="#"
+              href="https://www.instagram.com/lussoxsh/"
               aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
               className="opacity-90 hover:opacity-100 transition"
+              title="Instagram"
             >
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                 <rect
@@ -98,9 +115,12 @@ export default function Footer() {
             </a>
             {/* LinkedIn */}
             <a
-              href="#"
+              href="https://www.linkedin.com/company/lusso-interiors-pvt-ltd/"
               aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
               className="opacity-90 hover:opacity-100 transition"
+              title="LinkedIn"
             >
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                 <rect
@@ -122,9 +142,12 @@ export default function Footer() {
             </a>
             {/* Facebook */}
             <a
-              href="#"
+              href="https://www.facebook.com/lussoxsh/"
               aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
               className="opacity-90 hover:opacity-100 transition"
+              title="Facebook"
             >
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                 <rect
@@ -151,26 +174,51 @@ export default function Footer() {
           <div className="grid grid-cols-1 gap-6 text-sm md:text-base text-white/90">
             <div className="space-y-1">
               <p className="text-white/70">Address</p>
-              <p>123, Lusso, Banjara Hills</p>
+              <p>
+                Second Floor, NVR Square, 8-2-682, Plot No 2, Road No. 12,
+                <br />
+                Banjara Hills, Hyderabad, Telangana 500028
+              </p>
             </div>
+
             <div className="space-y-1">
               <p className="text-white/70">Contact</p>
               <a
-                href="tel:+919494567900"
+                href="tel:+919888781999"
                 className="underline decoration-transparent hover:decoration-white/60 transition"
               >
-                +91 94945 67900 — LUSSO
+                +91 98887 81999 — LUSSO
               </a>
               <br />
               <a
-                href="mailto:hello@lusso.com"
+                href="mailto:info@lussointeriors.in"
                 className="underline decoration-transparent hover:decoration-white/60 transition"
               >
-                hello@lusso.com
+                info@lussointeriors.in
               </a>
             </div>
+
             <div className="pt-2 text-xs text-white/60">
               © {new Date().getFullYear()} Lusso. All rights reserved.
+            </div>
+
+            {/* Legal links row */}
+            <div className="pt-1 text-xs text-white/60 flex items-center justify-center gap-3">
+              <Link
+                href="/terms"
+                className="underline decoration-transparent hover:decoration-white/60 transition"
+                aria-label="Terms & Conditions"
+              >
+                Terms & Conditions
+              </Link>
+              <span aria-hidden>•</span>
+              <Link
+                href="/privacy"
+                className="underline decoration-transparent hover:decoration-white/60 transition"
+                aria-label="Privacy Policy"
+              >
+                Privacy Policy
+              </Link>
             </div>
           </div>
         </div>
