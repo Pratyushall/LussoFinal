@@ -127,7 +127,7 @@ function ContactHero() {
           </motion.h1>
 
           <motion.div
-            className="w-32 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mb-8"
+            className="w-32 h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto mb-8"
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
             transition={{ duration: 1.5, delay: 0.5 }}
