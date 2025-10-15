@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import {
   motion,
   useInView,
@@ -8,10 +9,8 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 export default function JourneySection() {
-  const router = useRouter();
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [activeStep, setActiveStep] = useState<number | null>(null);
@@ -51,8 +50,6 @@ export default function JourneySection() {
       description:
         "Fill out a quick form or give us a call — tell us about your dream kitchen or wardrobe.",
       icon: "",
-      color: "from-amber-500 to-orange-500",
-      voidColor: "rgba(59, 130, 246, 0.3)",
     },
     {
       number: "02",
@@ -60,8 +57,6 @@ export default function JourneySection() {
       description:
         "Our experts get in touch to understand your space, style, and budget. We co-create the perfect design, just for you.",
       icon: "",
-      color: "from-amber-500 to-orange-500",
-      voidColor: "rgba(147, 51, 234, 0.3)",
     },
     {
       number: "03",
@@ -69,8 +64,6 @@ export default function JourneySection() {
       description:
         "Visit our Experience Center to explore materials, finishes, and modular layouts in person.",
       icon: "",
-      color: "from-amber-500 to-orange-500",
-      voidColor: "rgba(16, 185, 129, 0.3)",
     },
     {
       number: "04",
@@ -78,8 +71,6 @@ export default function JourneySection() {
       description:
         "We finalize the design, share a transparent quote, and lock in timelines.",
       icon: "",
-      color: "from-amber-500 to-orange-500",
-      voidColor: "rgba(245, 158, 11, 0.3)",
     },
     {
       number: "05",
@@ -87,8 +78,6 @@ export default function JourneySection() {
       description:
         "Sit back and relax — our team handles delivery and installation with care and precision.",
       icon: "",
-      color: "from-amber-500 to-orange-500",
-      voidColor: "rgba(239, 68, 68, 0.3)",
     },
     {
       number: "06",
@@ -96,13 +85,16 @@ export default function JourneySection() {
       description:
         "Even after the work is done, we're just a call away for maintenance or upgrades.",
       icon: "",
-      color: "from-amber-500 to-amber-500",
-      voidColor: "rgba(99, 102, 241, 0.3)",
     },
   ];
 
-  const handleStepClick = (index: number) => setOpenModal(index);
-  const closeModal = () => setOpenModal(null);
+  const handleStepClick = (index: number) => {
+    setOpenModal(index);
+  };
+
+  const closeModal = () => {
+    setOpenModal(null);
+  };
 
   const renderModalContent = (stepIndex: number) => {
     const step = journeySteps[stepIndex];
@@ -121,14 +113,7 @@ export default function JourneySection() {
               </p>
             </div>
 
-            {/* This form is illustrative; CTA routes to /contact */}
-            <form
-              className="space-y-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-                router.push("/contact");
-              }}
-            >
+            <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-white/80 text-sm font-light mb-2">
@@ -136,7 +121,7 @@ export default function JourneySection() {
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300"
                     placeholder="Enter your first name"
                   />
                 </div>
@@ -146,7 +131,7 @@ export default function JourneySection() {
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300"
                     placeholder="Enter your last name"
                   />
                 </div>
@@ -158,7 +143,7 @@ export default function JourneySection() {
                 </label>
                 <input
                   type="email"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -169,7 +154,7 @@ export default function JourneySection() {
                 </label>
                 <input
                   type="tel"
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300"
                   placeholder="9192457683"
                 />
               </div>
@@ -178,7 +163,7 @@ export default function JourneySection() {
                 <label className="block text-white/80 text-sm font-light mb-2">
                   Project Type
                 </label>
-                <select className="w-full px-4 py-3 bg-[#1f2737] text-white border border-white/20 rounded-xl focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 transition-all duration-300">
+                <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-black focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300">
                   <option value="">Select your project type</option>
                   <option value="kitchen">Kitchen Design</option>
                   <option value="wardrobe">Wardrobe Design</option>
@@ -192,7 +177,7 @@ export default function JourneySection() {
                 <label className="block text-white/80 text-sm font-light mb-2">
                   Budget Range
                 </label>
-                <select className="w-full px-4 py-3 bg-[#1f2737] text-white border border-white/20 rounded-xl focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 transition-all duration-300">
+                <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-black focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300">
                   <option value="">Select your budget range</option>
                   <option value="50k-100k">Rs.50,000 - Rs.100,000</option>
                   <option value="100k-250k">Rs.100,000 - Rs.250,000</option>
@@ -207,19 +192,21 @@ export default function JourneySection() {
                 </label>
                 <textarea
                   rows={4}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300 resize-none"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-600 focus:bg-white/15 transition-all duration-300 resize-none"
                   placeholder="Describe your vision, style preferences, timeline, and any specific requirements..."
                 />
               </div>
 
-              <motion.button
-                type="submit"
-                className="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-800 text-white rounded-xl font-light tracking-wide hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Send Message
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  type="button"
+                  className="w-full py-4 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide hover:shadow-lg hover:shadow-blue-700/25 transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Send Message
+                </motion.button>
+              </Link>
             </form>
           </div>
         );
@@ -237,18 +224,69 @@ export default function JourneySection() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* ...content unchanged... */}
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-3">
+                    Initial Discovery
+                  </h4>
+                  <ul className="space-y-2 text-white/70 text-sm">
+                    <li>• Space measurement and analysis</li>
+                    <li>• Lifestyle and usage assessment</li>
+                    <li>• Style preference exploration</li>
+                    <li>• Budget planning and optimization</li>
+                  </ul>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-3">
+                    Design Development
+                  </h4>
+                  <ul className="space-y-2 text-white/70 text-sm">
+                    <li>• 3D visualization and renderings</li>
+                    <li>• Material and finish selection</li>
+                    <li>• Functional layout optimization</li>
+                    <li>• Color scheme coordination</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-3">
+                    Collaborative Refinement
+                  </h4>
+                  <ul className="space-y-2 text-white/70 text-sm">
+                    <li>• Real-time design adjustments</li>
+                    <li>• Client feedback integration</li>
+                    <li>• Technical feasibility review</li>
+                    <li>• Timeline and milestone planning</li>
+                  </ul>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-3">
+                    Final Presentation
+                  </h4>
+                  <ul className="space-y-2 text-white/70 text-sm">
+                    <li>• Complete design package delivery</li>
+                    <li>• Detailed specifications document</li>
+                    <li>• Installation timeline overview</li>
+                    <li>• Investment breakdown</li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div className="text-center pt-6">
-              <motion.button
-                className="px-8 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white rounded-xl font-light tracking-wide"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push("/contact")}
-              >
-                Schedule Consultation
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Schedule Consultation
+                </motion.button>
+              </Link>
             </div>
           </div>
         );
@@ -267,18 +305,110 @@ export default function JourneySection() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* ...content unchanged... */}
+              <div className="space-y-6">
+                <div className="aspect-video bg-gradient-to-br from-blue-700/20 to-blue-900/20 rounded-2xl flex items-center justify-center border border-white/10">
+                  <div className="text-center">
+                    <div className="text-4xl mb-4">🏢</div>
+                    <p className="text-white/70">Virtual Tour Available</p>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    What You'll Experience
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                      <span className="text-white/70 text-sm">
+                        Full-scale kitchen and wardrobe displays
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                      <span className="text-white/70 text-sm">
+                        Premium material library with 500+ samples
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                      <span className="text-white/70 text-sm">
+                        Interactive technology demonstrations
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                      <span className="text-white/70 text-sm">
+                        One-on-one expert consultations
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Location & Hours
+                  </h4>
+                  <div className="space-y-3 text-white/70 text-sm">
+                    <p>
+                      <strong className="text-white">Address:</strong>
+                      <br />
+                      123 Design District, Luxury Lane
+                      <br />
+                      New York, NY 10001
+                    </p>
+                    <p>
+                      <strong className="text-white">Hours:</strong>
+                      <br />
+                      Mon-Fri: 9:00 AM - 7:00 PM
+                      <br />
+                      Sat-Sun: 10:00 AM - 6:00 PM
+                    </p>
+                    <p>
+                      <strong className="text-white">Phone:</strong> +1 (555)
+                      123-LUSSO
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Book Your Visit
+                  </h4>
+                  <div className="space-y-4">
+                    <input
+                      type="date"
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-blue-700 focus:bg-white/15 transition-all duration-300"
+                    />
+                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-blue-700 focus:bg-white/15 transition-all duration-300">
+                      <option value="">Select time slot</option>
+                      <option value="morning">
+                        Morning (9:00 AM - 12:00 PM)
+                      </option>
+                      <option value="afternoon">
+                        Afternoon (1:00 PM - 5:00 PM)
+                      </option>
+                      <option value="evening">
+                        Evening (5:00 PM - 7:00 PM)
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="text-center pt-6">
-              <motion.button
-                className="px-8 py-3 bg-gradient-to-r from-amber-400 to-amber-600 text-white rounded-xl font-light tracking-wide"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push("/contact")}
-              >
-                Book Experience Center Visit
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Book Experience Center Visit
+                </motion.button>
+              </Link>
             </div>
           </div>
         );
@@ -297,18 +427,119 @@ export default function JourneySection() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* ...content unchanged... */}
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    What's Included
+                  </h4>
+                  <div className="space-y-3">
+                    {[
+                      "Detailed 3D renderings and technical drawings",
+                      "Complete material specifications",
+                      "Installation timeline with milestones",
+                      "Warranty and aftercare information",
+                      "Payment schedule options",
+                      "Project management coordination",
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-blue-700 rounded-full mt-2"></div>
+                        <span className="text-white/70 text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Investment Breakdown
+                  </h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between text-white/70">
+                      <span>Design & Planning</span>
+                      <span>15%</span>
+                    </div>
+                    <div className="flex justify-between text-white/70">
+                      <span>Materials & Finishes</span>
+                      <span>60%</span>
+                    </div>
+                    <div className="flex justify-between text-white/70">
+                      <span>Installation & Labor</span>
+                      <span>20%</span>
+                    </div>
+                    <div className="flex justify-between text-white/70">
+                      <span>Project Management</span>
+                      <span>5%</span>
+                    </div>
+                    <div className="border-t border-white/20 pt-3 mt-3">
+                      <div className="flex justify-between text-white font-light">
+                        <span>Total Investment</span>
+                        <span>100%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Timeline Overview
+                  </h4>
+                  <div className="space-y-4">
+                    {[
+                      { phase: "Design Finalization", duration: "1-2 weeks" },
+                      { phase: "Material Procurement", duration: "2-4 weeks" },
+                      { phase: "Manufacturing", duration: "4-6 weeks" },
+                      { phase: "Installation", duration: "1-2 weeks" },
+                      { phase: "Final Touches", duration: "3-5 days" },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center p-3 bg-white/5 rounded-lg"
+                      >
+                        <span className="text-white/80 text-sm">
+                          {item.phase}
+                        </span>
+                        <span className="text-blue-700 text-sm font-light">
+                          {item.duration}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Payment Options
+                  </h4>
+                  <div className="space-y-3 text-white/70 text-sm">
+                    <div className="p-3 bg-white/5 rounded-lg">
+                      <strong className="text-white">Standard Plan:</strong> 30%
+                      deposit, 40% at manufacturing, 30% on completion
+                    </div>
+                    <div className="p-3 bg-white/5 rounded-lg">
+                      <strong className="text-white">Flexible Plan:</strong>{" "}
+                      Custom payment schedule available
+                    </div>
+                    <div className="p-3 bg-white/5 rounded-lg">
+                      <strong className="text-white">Financing:</strong> 0% APR
+                      available for qualified buyers
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="text-center pt-6">
-              <motion.button
-                className="px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-light tracking-wide"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push("/contact")}
-              >
-                Request Detailed Quote
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Request Detailed Quote
+                </motion.button>
+              </Link>
             </div>
           </div>
         );
@@ -327,18 +558,108 @@ export default function JourneySection() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* ...content unchanged... */}
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Pre-Installation
+                  </h4>
+                  <div className="space-y-3">
+                    {[
+                      "Site preparation and protection",
+                      "Final measurements verification",
+                      "Material delivery coordination",
+                      "Installation team briefing",
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                        <span className="text-white/70 text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    During Installation
+                  </h4>
+                  <div className="space-y-3">
+                    {[
+                      "Daily progress updates",
+                      "Quality checkpoints at each stage",
+                      "Minimal disruption protocols",
+                      "Real-time issue resolution",
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                        <span className="text-white/70 text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Our Installation Promise
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <h5 className="text-white font-light mb-2">
+                        Zero Damage Guarantee
+                      </h5>
+                      <p className="text-white/70 text-sm">
+                        Complete protection of your existing spaces and
+                        belongings.
+                      </p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <h5 className="text-white font-light mb-2">
+                        Timeline Commitment
+                      </h5>
+                      <p className="text-white/70 text-sm">
+                        Installation completed within agreed timeframe or
+                        compensation provided.
+                      </p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <h5 className="text-white font-light mb-2">
+                        Quality Assurance
+                      </h5>
+                      <p className="text-white/70 text-sm">
+                        Multi-point quality checks and client approval at each
+                        milestone.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Installation Team
+                  </h4>
+                  <div className="space-y-3 text-white/70 text-sm">
+                    <p>
+                      • Certified master craftsmen with 10+ years experience
+                    </p>
+                    <p>• Specialized teams for different installation phases</p>
+                    <p>• Project manager on-site for coordination</p>
+                    <p>• Quality inspector for final approval</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="text-center pt-6">
-              <motion.button
-                className="px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-light tracking-wide"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push("/contact")}
-              >
-                Track Installation Progress
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Track Installation Progress
+                </motion.button>
+              </Link>
             </div>
           </div>
         );
@@ -357,18 +678,152 @@ export default function JourneySection() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* ...content unchanged... */}
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Warranty Coverage
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <div className="flex justify-between items-center mb-2">
+                        <h5 className="text-white font-light">
+                          Structural Components
+                        </h5>
+                        <span className="text-blue-700 text-sm">25 Years</span>
+                      </div>
+                      <p className="text-white/70 text-sm">
+                        Cabinet boxes, frames, and structural elements
+                      </p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <div className="flex justify-between items-center mb-2">
+                        <h5 className="text-white font-light">
+                          Hardware & Mechanisms
+                        </h5>
+                        <span className="text-blue-700 text-sm">10 Years</span>
+                      </div>
+                      <p className="text-white/70 text-sm">
+                        Hinges, slides, handles, and moving parts
+                      </p>
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-blue-700/10 to-blue-900/10 rounded-lg border border-blue-700/20">
+                      <div className="flex justify-between items-center mb-2">
+                        <h5 className="text-white font-light">
+                          Finishes & Surfaces
+                        </h5>
+                        <span className="text-blue-700 text-sm">5 Years</span>
+                      </div>
+                      <p className="text-white/70 text-sm">
+                        Paint, laminate, and surface treatments
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Maintenance Services
+                  </h4>
+                  <div className="space-y-3">
+                    {[
+                      "Annual maintenance inspections",
+                      "Hardware adjustment and lubrication",
+                      "Surface cleaning and restoration",
+                      "Replacement parts availability",
+                      "Upgrade and modification services",
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                        <span className="text-white/70 text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Support Channels
+                  </h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-4 p-3 bg-white/5 rounded-lg">
+                      <div className="text-2xl"></div>
+                      <div>
+                        <h5 className="text-white font-light">
+                          24/7 Support Hotline
+                        </h5>
+                        <p className="text-white/70 text-sm">
+                          +1 (555) 123-CARE
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4 p-3 bg-white/5 rounded-lg">
+                      <div className="text-2xl"></div>
+                      <div>
+                        <h5 className="text-white font-light">
+                          Live Chat Support
+                        </h5>
+                        <p className="text-white/70 text-sm">
+                          Instant help on our website
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4 p-3 bg-white/5 rounded-lg">
+                      <div className="text-2xl"></div>
+                      <div>
+                        <h5 className="text-white font-light">Email Support</h5>
+                        <p className="text-white/70 text-sm">
+                          support@lusso.com
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-4 p-3 bg-white/5 rounded-lg">
+                      <div className="text-2xl"></div>
+                      <div>
+                        <h5 className="text-white font-light">
+                          On-Site Service
+                        </h5>
+                        <p className="text-white/70 text-sm">
+                          Scheduled maintenance visits
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <h4 className="text-xl font-light text-white mb-4">
+                    Request Support
+                  </h4>
+                  <div className="space-y-4">
+                    <select className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-blue-700 focus:bg-white/15 transition-all duration-300">
+                      <option value="">Select support type</option>
+                      <option value="warranty">Warranty Claim</option>
+                      <option value="maintenance">Maintenance Request</option>
+                      <option value="repair">Repair Service</option>
+                      <option value="upgrade">Upgrade Consultation</option>
+                    </select>
+                    <textarea
+                      rows={3}
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-blue-700 focus:bg-white/15 transition-all duration-300 resize-none"
+                      placeholder="Describe your support request..."
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="text-center pt-6">
-              <motion.button
-                className="px-8 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white rounded-xl font-light tracking-wide"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => router.push("/contact")}
-              >
-                Contact Support Team
-              </motion.button>
+              <Link href="/contact">
+                <motion.button
+                  className="px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-light tracking-wide"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Contact Support Team
+                </motion.button>
+              </Link>
             </div>
           </div>
         );
@@ -384,11 +839,158 @@ export default function JourneySection() {
       className="py-32 relative overflow-hidden"
       style={{ backgroundColor: "#0a1526" }}
     >
-      {/* background/void effects unchanged ... */}
+      {/* Void Background Effects */}
+      <div className="absolute inset-0">
+        {/* Main Void Portal */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          style={{ scale: voidScale }}
+        >
+          <motion.div
+            className="w-96 h-96 rounded-full relative"
+            animate={{
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          >
+            {/* Void Rings */}
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute inset-0 rounded-full border border-white/10"
+                style={{
+                  scale: 1 - i * 0.15,
+                  opacity: 0.8 - i * 0.15,
+                }}
+                animate={{
+                  rotate: [0, -360],
+                  scale: [1 - i * 0.15, 1.2 - i * 0.15, 1 - i * 0.15],
+                }}
+                transition={{
+                  duration: 15 + i * 3,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+
+            <motion.div
+              className="absolute inset-16 rounded-full bg-gradient-to-r from-blue-700/20 via-blue-800/20 to-blue-900/20 shadow-inner"
+              animate={{
+                boxShadow: [
+                  "inset 0 0 50px rgba(0,0,0,0.8)",
+                  "inset 0 0 100px rgba(0,0,0,0.9)",
+                  "inset 0 0 50px rgba(0,0,0,0.8)",
+                ],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              }}
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Floating Void Particles */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              x: [0, Math.random() * 50 - 25, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Number.POSITIVE_INFINITY,
+              delay: i * 0.5,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+
+        {/* Interactive Void Distortion */}
+        <motion.div
+          className="absolute w-64 h-64 rounded-full bg-gradient-radial from-white/5 to-transparent blur-xl pointer-events-none"
+          animate={{
+            x: mousePosition.x * 100 - 50,
+            y: mousePosition.y * 100 - 50,
+          }}
+          transition={{ type: "spring", stiffness: 100, damping: 30 }}
+        />
+      </div>
+
+      {/* Parallax Background Layer */}
+      <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/20 to-transparent" />
+      </motion.div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        {/* header unchanged ... */}
+        {/* Dramatic Header */}
+        <motion.div
+          className="text-center mb-24"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1 }}
+        >
+          <motion.div
+            className="relative inline-block mb-8"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={isInView ? { scale: 1, opacity: 1 } : {}}
+            transition={{ duration: 1.2, delay: 0.2 }}
+          >
+            <h2 className="text-7xl font-thin text-white tracking-tight relative z-10">
+              Your Journey with{" "}
+              <span
+                className="text-transparent bg-clip-text"
+                style={{
+                  backgroundImage: `linear-gradient(
+      to right,
+      rgba(29, 78, 216, 0.9),
+      rgba(30, 64, 175, 1),
+      rgba(30, 58, 138, 1)
+    )`,
+                }}
+              >
+                LUSSO
+              </span>
+            </h2>
 
+            {/* Void Halo Effect */}
+            <motion.div
+              className="absolute -inset-8 rounded-full border border-white/10"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "linear",
+              }}
+            />
+          </motion.div>
+
+          <motion.div
+            className="w-24 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.5, delay: 0.5 }}
+          />
+        </motion.div>
+
+        {/* Enhanced Grid with Void Effects */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {journeySteps.map((step, index) => (
             <motion.div
@@ -402,13 +1004,108 @@ export default function JourneySection() {
               onClick={() => handleStepClick(index)}
               style={{ perspective: "1000px" }}
             >
-              {/* card content unchanged ... */}
+              <motion.div
+                className="absolute -inset-4 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `radial-gradient(circle, rgba(29, 78, 216, 0.3), transparent 70%)`,
+                  filter: "blur(20px)",
+                }}
+              />
+
+              <motion.div
+                className={`relative p-8 rounded-3xl backdrop-blur-sm border h-full transition-all duration-500 overflow-hidden ${
+                  activeStep === index
+                    ? "bg-white/10 border-white/30"
+                    : "bg-white/5 border-white/10"
+                }`}
+                whileHover={{
+                  y: -12,
+                  rotateY: 5,
+                  rotateX: 5,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                <motion.div
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full border border-white/20 opacity-0 group-hover:opacity-100"
+                  animate={
+                    activeStep === index
+                      ? {
+                          rotate: [0, 360],
+                          scale: [1, 1.2, 1],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 2,
+                    repeat: activeStep === index ? Number.POSITIVE_INFINITY : 0,
+                    ease: "linear",
+                  }}
+                >
+                  <motion.div
+                    className="absolute inset-2 rounded-full bg-gradient-to-r from-blue-700 to-blue-900"
+                    animate={
+                      activeStep === index
+                        ? {
+                            boxShadow: [
+                              "inset 0 0 10px rgba(0,0,0,0.8)",
+                              "inset 0 0 20px rgba(0,0,0,0.9)",
+                              "inset 0 0 10px rgba(0,0,0,0.8)",
+                            ],
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 1.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                    }}
+                  />
+                </motion.div>
+
+                <h3
+                  className={`text-xl font-light mb-4 leading-tight transition-all duration-500 ${
+                    activeStep === index
+                      ? "text-white drop-shadow-lg"
+                      : "text-white/90"
+                  }`}
+                >
+                  {step.title}
+                </h3>
+
+                <p
+                  className={`text-sm leading-relaxed font-light transition-colors duration-500 ${
+                    activeStep === index ? "text-white/90" : "text-white/60"
+                  }`}
+                >
+                  {step.description}
+                </p>
+
+                {/* Click to expand hint */}
+                <motion.div className="absolute bottom-4 right-4 text-xs text-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Click to expand
+                </motion.div>
+
+                <motion.div
+                  className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-blue-700 to-blue-900"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{
+                    scaleX: activeStep === index ? 1 : 0,
+                    opacity: activeStep === index ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
+                />
+
+                <motion.div
+                  className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-700 to-blue-900 opacity-0"
+                  animate={{ opacity: activeStep === index ? 0.05 : 0 }}
+                  transition={{ duration: 0.5 }}
+                />
+              </motion.div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal Overlay */}
       <AnimatePresence>
         {openModal !== null && (
           <motion.div
@@ -426,10 +1123,11 @@ export default function JourneySection() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Modal Header */}
               <div className="sticky top-0 bg-slate-800/95 backdrop-blur-md border-b border-white/10 p-6 flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <motion.div
-                    className={`w-10 h-10 rounded-full bg-gradient-to-r ${journeySteps[openModal].color} flex items-center justify-center text-white text-sm font-light`}
+                    className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-900 flex items-center justify-center text-white text-sm font-light"
                     animate={{ rotate: [0, 360] }}
                     transition={{
                       duration: 2,
@@ -459,19 +1157,12 @@ export default function JourneySection() {
                 </motion.button>
               </div>
 
+              {/* Modal Content - Scrollable */}
               <div className="overflow-y-auto max-h-[calc(90vh-100px)] p-8">
                 {renderModalContent(openModal)}
               </div>
 
-              <motion.div
-                className={`absolute inset-0 rounded-3xl border-2 bg-gradient-to-r ${journeySteps[openModal].color} opacity-20 pointer-events-none`}
-                animate={{ opacity: [0.1, 0.3, 0.1] }}
-                transition={{
-                  duration: 3,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              />
+              <div className="absolute inset-0 rounded-3xl border-2 bg-gradient-to-r from-blue-700 to-blue-900 opacity-20 pointer-events-none" />
             </motion.div>
           </motion.div>
         )}
