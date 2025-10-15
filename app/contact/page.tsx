@@ -111,11 +111,11 @@ function ContactHero() {
               className="text-transparent bg-clip-text"
               style={{
                 backgroundImage: `linear-gradient(
-      to right,
-      rgba(213, 175, 46, 0.9),   /* lighter gold */
-      rgba(213, 175, 46, 1),     /* base gold */
-      rgba(150, 120, 30, 1)      /* deeper gold */
-    )`,
+                  to right,
+                  rgba(213, 175, 46, 0.9),
+                  rgba(213, 175, 46, 1),
+                  rgba(150, 120, 30, 1)
+                )`,
               }}
             >
               Us
@@ -144,12 +144,20 @@ function ContactHero() {
   );
 }
 
+// Shared select styling (dark dropdown + amber focus)
+const selectClass =
+  "w-full px-4 py-3 rounded-xl bg-[#1f2737] text-white border border-white/20 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 transition-all duration-300";
+
 function ContactFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   type Audience = "homeowner" | "partner";
   const [audience, setAudience] = useState<Audience>("homeowner");
+
+  const [loading, setLoading] = useState(false);
+  const [ok, setOk] = useState<boolean | null>(null);
+  const [err, setErr] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -160,7 +168,7 @@ function ContactFormSection() {
     budget: "",
     company: "",
     partnership: "",
-    website: "",
+    role: "", // renamed from website to avoid honeypot clash
   });
 
   const handleInputChange = (
@@ -168,6 +176,66 @@ function ContactFormSection() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); // stop page refresh
+    setLoading(true);
+    setOk(null);
+    setErr(null);
+
+    // Build payload expected by contact.php
+    const payload: any = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message:
+        (audience === "partner"
+          ? `[PARTNER ENQUIRY]\nCompany: ${
+              formData.company || "-"
+            }\nPartnership: ${formData.partnership || "-"}\nRole/Website: ${
+              formData.role || "-"
+            }\n\n`
+          : `[HOMEOWNER ENQUIRY]\nProject Type: ${
+              formData.projectType || "-"
+            }\nBudget: ${formData.budget || "-"}\n\n`) +
+        (formData.message || ""),
+      // IMPORTANT: keep spam honeypot empty for backend
+      website: "",
+    };
+
+    try {
+      const res = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (json?.ok) {
+        setOk(true);
+        (e.currentTarget as HTMLFormElement).reset();
+        // clear state
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          projectType: "",
+          budget: "",
+          company: "",
+          partnership: "",
+          role: "",
+        });
+      } else {
+        setOk(false);
+        setErr(json?.error || "send_failed");
+      }
+    } catch (_e) {
+      setOk(false);
+      setErr("network_error");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section
@@ -220,11 +288,21 @@ function ContactFormSection() {
 
             {/* Form */}
             <motion.form
+              onSubmit={onSubmit}
               className="space-y-6"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: 0.15 }}
             >
+              {/* Honeypot: must remain empty for spam check */}
+              <input
+                type="text"
+                name="website"
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+
               <div className="grid md:grid-cols-2 gap-6">
                 <Field
                   label={audience === "partner" ? "Contact Name" : "Full Name"}
@@ -234,6 +312,7 @@ function ContactFormSection() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
                     placeholder={
                       audience === "partner"
@@ -248,6 +327,7 @@ function ContactFormSection() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
                     placeholder="your.email@example.com"
                   />
@@ -272,7 +352,7 @@ function ContactFormSection() {
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                      className={selectClass}
                     >
                       <option value="">Select project type</option>
                       <option value="kitchen">Kitchen</option>
@@ -301,7 +381,7 @@ function ContactFormSection() {
                     name="budget"
                     value={formData.budget}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                    className={selectClass}
                   >
                     <option value="">Select budget range</option>
                     <option value="5-10">₹5L – ₹10L</option>
@@ -317,7 +397,7 @@ function ContactFormSection() {
                       name="partnership"
                       value={formData.partnership}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
+                      className={selectClass}
                     >
                       <option value="">Choose one</option>
                       <option value="architect">Architect</option>
@@ -333,8 +413,8 @@ function ContactFormSection() {
                   <Field label="Role / Website (optional)">
                     <input
                       type="text"
-                      name="website"
-                      value={formData.website}
+                      name="role" // not "website" to avoid honeypot
+                      value={formData.role}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300"
                       placeholder="e.g., Principal Architect / https://…"
@@ -355,6 +435,7 @@ function ContactFormSection() {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={5}
+                  required
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all duration-300 resize-none"
                   placeholder={
                     audience === "partner"
@@ -364,20 +445,33 @@ function ContactFormSection() {
                 />
               </Field>
 
+              {/* Status messages */}
+              {ok === true && (
+                <div className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 text-emerald-200 px-4 py-3">
+                  Thanks! We’ll get back to you soon.
+                </div>
+              )}
+              {ok === false && (
+                <div className="rounded-lg border border-red-400/30 bg-red-400/10 text-red-200 px-4 py-3">
+                  Couldn’t send{err ? ` (${err})` : ""}. Please try again.
+                </div>
+              )}
+
               <div className="pt-2 flex justify-center">
                 <motion.button
                   type="submit"
+                  disabled={loading}
                   className="px-10 sm:px-12 py-4 rounded-full
                              bg-gradient-to-r from-amber-500 to-amber-600
                              text-black font-light tracking-wide
                              shadow-[0_8px_24px_rgba(251,191,36,0.25)]
                              hover:shadow-[0_12px_36px_rgba(251,191,36,0.35)]
                              transition-all duration-300
-                             w-full sm:w-auto sm:min-w-[220px] mx-auto"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                             w-full sm:w-auto sm:min-w-[220px] mx-auto disabled:opacity-60"
+                  whileHover={{ scale: loading ? 1 : 1.02 }}
+                  whileTap={{ scale: loading ? 1 : 0.98 }}
                 >
-                  Send Message
+                  {loading ? "Sending…" : "Send Message"}
                 </motion.button>
               </div>
             </motion.form>
@@ -427,7 +521,7 @@ function ContactInfoSection() {
             />
             <InfoCard
               title="Email"
-              lines={["hello@lusso.com", "projects@lusso.com"]}
+              lines={["info@lussointeriors.in", "projects@lussointeriors.in"]}
               svg={
                 <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
                   <path
